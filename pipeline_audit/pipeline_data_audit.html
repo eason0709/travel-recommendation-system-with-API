@@ -1,0 +1,2921 @@
+
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<title>Pipeline Data Audit</title>
+<style>
+body {
+  font-family: "Microsoft JhengHei", "Noto Sans TC", Arial, sans-serif;
+  line-height: 1.65;
+  margin: 0;
+  background: #f5f5f5;
+  color: #222;
+}
+.container {
+  max-width: 1180px;
+  margin: 0 auto;
+  padding: 28px 20px 60px;
+}
+h1, h2, h3 {
+  margin-top: 0;
+}
+.card, section {
+  background: white;
+  padding: 20px 24px;
+  margin-bottom: 18px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+}
+table {
+  border-collapse: collapse;
+  width: 100%;
+  font-size: 14px;
+  margin: 10px 0 18px;
+}
+th, td {
+  border: 1px solid #ddd;
+  padding: 7px 9px;
+  vertical-align: top;
+}
+th {
+  background: #f0f0f0;
+}
+img {
+  max-width: 100%;
+  border: 1px solid #ddd;
+  border-radius: 6px;
+  background: white;
+}
+.figure-card {
+  background: white;
+  padding: 18px 20px;
+  margin-bottom: 18px;
+  border-radius: 10px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+}
+.mono {
+  font-family: Consolas, monospace;
+  word-break: break-all;
+}
+.missing {
+  color: #a60000;
+  font-weight: 700;
+}
+.warning {
+  color: #945500;
+  font-weight: 700;
+}
+summary {
+  cursor: pointer;
+  font-weight: 700;
+  margin: 8px 0;
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="card">
+    <h1>Pipeline Data Audit</h1>
+    <p>本報告用來視覺化確認 travel recommendation project 的資料 pipeline 是否完整。</p>
+    <p class="mono">Project root: C:\Users\user\Desktop\ntu\114-2\python資料分析\travel_clustering_project_import_openstreetmap</p>
+  </div>
+
+  <div class="card">
+    <h2>1. Expected file status</h2>
+    <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>key</th>
+      <th>path</th>
+      <th>exists</th>
+      <th>size_kb</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>01_user_behavior</td>
+      <td>data\travel_behavior.csv</td>
+      <td>True</td>
+      <td>4725.73</td>
+    </tr>
+    <tr>
+      <td>02_clustered_users</td>
+      <td>data\travel_behavior_soft_clustered.csv</td>
+      <td>True</td>
+      <td>8155.67</td>
+    </tr>
+    <tr>
+      <td>03_cluster_feature_mean</td>
+      <td>data\soft_cluster_feature_mean.csv</td>
+      <td>True</td>
+      <td>1.27</td>
+    </tr>
+    <tr>
+      <td>04_cluster_interpretation</td>
+      <td>data\soft_cluster_interpretation.csv</td>
+      <td>True</td>
+      <td>3.84</td>
+    </tr>
+    <tr>
+      <td>05_cluster_label_summary</td>
+      <td>data\soft_cluster_label_summary.csv</td>
+      <td>True</td>
+      <td>6.25</td>
+    </tr>
+    <tr>
+      <td>06_attractions</td>
+      <td>data\attractions.csv</td>
+      <td>True</td>
+      <td>43.45</td>
+    </tr>
+    <tr>
+      <td>07_user_interactions</td>
+      <td>data\user_interactions.csv</td>
+      <td>True</td>
+      <td>3473.06</td>
+    </tr>
+    <tr>
+      <td>08_all_recommendation_candidates</td>
+      <td>data\all_recommendation_candidates.csv</td>
+      <td>True</td>
+      <td>989485.66</td>
+    </tr>
+    <tr>
+      <td>09_recommendations</td>
+      <td>data\recommendations.csv</td>
+      <td>True</td>
+      <td>16462.67</td>
+    </tr>
+    <tr>
+      <td>10_method_comparison</td>
+      <td>data\recommendation_method_comparison.csv</td>
+      <td>True</td>
+      <td>0.34</td>
+    </tr>
+    <tr>
+      <td>11_model_pipeline</td>
+      <td>models\soft_cluster_pipeline.pkl</td>
+      <td>True</td>
+      <td>14.35</td>
+    </tr>
+  </tbody>
+</table>
+  </div>
+
+  <div class="card">
+    <h2>2. Consistency checks</h2>
+    <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>check</th>
+      <th>status</th>
+      <th>detail</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>File exists: 01_user_behavior</td>
+      <td>PASS</td>
+      <td>data\travel_behavior.csv</td>
+    </tr>
+    <tr>
+      <td>File exists: 02_clustered_users</td>
+      <td>PASS</td>
+      <td>data\travel_behavior_soft_clustered.csv</td>
+    </tr>
+    <tr>
+      <td>File exists: 03_cluster_feature_mean</td>
+      <td>PASS</td>
+      <td>data\soft_cluster_feature_mean.csv</td>
+    </tr>
+    <tr>
+      <td>File exists: 04_cluster_interpretation</td>
+      <td>PASS</td>
+      <td>data\soft_cluster_interpretation.csv</td>
+    </tr>
+    <tr>
+      <td>File exists: 05_cluster_label_summary</td>
+      <td>PASS</td>
+      <td>data\soft_cluster_label_summary.csv</td>
+    </tr>
+    <tr>
+      <td>File exists: 06_attractions</td>
+      <td>PASS</td>
+      <td>data\attractions.csv</td>
+    </tr>
+    <tr>
+      <td>File exists: 07_user_interactions</td>
+      <td>PASS</td>
+      <td>data\user_interactions.csv</td>
+    </tr>
+    <tr>
+      <td>File exists: 08_all_recommendation_candidates</td>
+      <td>PASS</td>
+      <td>data\all_recommendation_candidates.csv</td>
+    </tr>
+    <tr>
+      <td>File exists: 09_recommendations</td>
+      <td>PASS</td>
+      <td>data\recommendations.csv</td>
+    </tr>
+    <tr>
+      <td>File exists: 10_method_comparison</td>
+      <td>PASS</td>
+      <td>data\recommendation_method_comparison.csv</td>
+    </tr>
+    <tr>
+      <td>File exists: 11_model_pipeline</td>
+      <td>PASS</td>
+      <td>models\soft_cluster_pipeline.pkl</td>
+    </tr>
+    <tr>
+      <td>User preference columns in clustered data</td>
+      <td>PASS</td>
+      <td>Found 7/7 preference columns.</td>
+    </tr>
+    <tr>
+      <td>Context columns retained for display</td>
+      <td>PASS</td>
+      <td>Found context columns: budget, available_time, weather_badness, social_context, fatigue, spontaneity</td>
+    </tr>
+    <tr>
+      <td>Cluster confidence range</td>
+      <td>PASS</td>
+      <td>min=0.3483, mean=0.9638, max=1.0000</td>
+    </tr>
+    <tr>
+      <td>Attraction feature columns</td>
+      <td>PASS</td>
+      <td>Found columns: indoor_score, cost_level, photo_value, nature_value, culture_value, food_value, popularity, estimated_time</td>
+    </tr>
+    <tr>
+      <td>Recommendation methods present</td>
+      <td>PASS</td>
+      <td>Found methods: cluster_only, collaborative_only, hybrid, personal_only</td>
+    </tr>
+  </tbody>
+</table>
+  </div>
+
+  <div class="card">
+    <h2>3. Generated visualizations</h2>
+    <p>以下圖表用於檢查 cluster、推薦分數、OSM 景點特徵、互動資料與方法比較結果。</p>
+  </div>
+
+  
+    <div class="figure-card">
+      <h3>Pipeline file status</h3>
+      <img src="figures/01_pipeline_file_status.png" alt="Pipeline file status">
+    </div>
+    
+
+    <div class="figure-card">
+      <h3>User count by soft cluster</h3>
+      <img src="figures/02_cluster_counts.png" alt="User count by soft cluster">
+    </div>
+    
+
+    <div class="figure-card">
+      <h3>Cluster confidence distribution</h3>
+      <img src="figures/03_cluster_confidence_distribution.png" alt="Cluster confidence distribution">
+    </div>
+    
+
+    <div class="figure-card">
+      <h3>Mean cluster probability</h3>
+      <img src="figures/04_cluster_probability_mean.png" alt="Mean cluster probability">
+    </div>
+    
+
+    <div class="figure-card">
+      <h3>Cluster feature mean heatmap</h3>
+      <img src="figures/05_heatmap_from_feature_mean.png" alt="Cluster feature mean heatmap">
+    </div>
+    
+
+    <div class="figure-card">
+      <h3>Method comparison: mean_similarity</h3>
+      <img src="figures/06_recommendation_method_comparison_mean_similarity.png" alt="Method comparison: mean_similarity">
+    </div>
+    
+
+    <div class="figure-card">
+      <h3>Method comparison: random_baseline</h3>
+      <img src="figures/06_recommendation_method_comparison_random_baseline.png" alt="Method comparison: random_baseline">
+    </div>
+    
+
+    <div class="figure-card">
+      <h3>Method comparison: recommendation_lift</h3>
+      <img src="figures/06_recommendation_method_comparison_recommendation_lift.png" alt="Method comparison: recommendation_lift">
+    </div>
+    
+
+    <div class="figure-card">
+      <h3>Top attraction types</h3>
+      <img src="figures/07_attraction_type_counts.png" alt="Top attraction types">
+    </div>
+    
+
+    <div class="figure-card">
+      <h3>Attraction feature distribution</h3>
+      <img src="figures/08_attraction_feature_distribution.png" alt="Attraction feature distribution">
+    </div>
+    
+
+    <div class="figure-card">
+      <h3>User preference feature distribution</h3>
+      <img src="figures/09_user_preference_distribution.png" alt="User preference feature distribution">
+    </div>
+    
+
+    <div class="figure-card">
+      <h3>User feature correlation matrix</h3>
+      <img src="figures/10_preference_correlation.png" alt="User feature correlation matrix">
+    </div>
+    
+
+    <div class="figure-card">
+      <h3>Interaction rating distribution</h3>
+      <img src="figures/11_interaction_rating_distribution.png" alt="Interaction rating distribution">
+    </div>
+    
+
+    <div class="figure-card">
+      <h3>Recommendation score distribution</h3>
+      <img src="figures/12_recommendation_score_distribution.png" alt="Recommendation score distribution">
+    </div>
+    
+
+    <div class="figure-card">
+      <h3>User preference PCA by soft cluster</h3>
+      <img src="figures/13_user_cluster_pca.png" alt="User preference PCA by soft cluster">
+    </div>
+    
+
+  <div class="card">
+    <h2>4. DataFrame profiles</h2>
+    <p>以下區塊提供每個主要 CSV 的 rows、columns、missing values、numeric summary 與前幾筆資料預覽。</p>
+  </div>
+
+  
+    <section>
+      <h3>01_user_behavior</h3>
+      <table>
+        <tr><th>Rows</th><td>20,000</td></tr>
+        <tr><th>Columns</th><td>14</td></tr>
+        <tr><th>Duplicated rows</th><td>0</td></tr>
+        <tr><th>Numeric columns</th><td>14</td></tr>
+        <tr><th>Non-numeric columns</th><td>0</td></tr>
+      </table>
+      <details>
+        <summary>Columns</summary>
+        <p class="mono">user_id, budget, available_time, weather_badness, social_context, fatigue, spontaneity, selected_indoor_score, selected_cost_level, selected_photo_value, selected_nature_value, selected_culture_value, selected_food_value, selected_popularity</p>
+      </details>
+      <details>
+        <summary>Missing values</summary>
+        <p>No missing values detected.</p>
+      </details>
+      <details>
+        <summary>Numeric summary</summary>
+        <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>user_id</th>
+      <td>20000.0</td>
+      <td>10000.5000</td>
+      <td>5773.6470</td>
+      <td>1.0000</td>
+      <td>5000.7500</td>
+      <td>10000.5000</td>
+      <td>15000.2500</td>
+      <td>20000.0000</td>
+    </tr>
+    <tr>
+      <th>budget</th>
+      <td>20000.0</td>
+      <td>825.7360</td>
+      <td>372.8759</td>
+      <td>140.9905</td>
+      <td>564.2413</td>
+      <td>747.5858</td>
+      <td>1007.8760</td>
+      <td>5000.0000</td>
+    </tr>
+    <tr>
+      <th>available_time</th>
+      <td>20000.0</td>
+      <td>4.4951</td>
+      <td>1.2027</td>
+      <td>1.0000</td>
+      <td>3.6716</td>
+      <td>4.4804</td>
+      <td>5.3079</td>
+      <td>9.1217</td>
+    </tr>
+    <tr>
+      <th>weather_badness</th>
+      <td>20000.0</td>
+      <td>0.2872</td>
+      <td>0.1679</td>
+      <td>0.0000</td>
+      <td>0.1595</td>
+      <td>0.2686</td>
+      <td>0.3984</td>
+      <td>0.9978</td>
+    </tr>
+    <tr>
+      <th>social_context</th>
+      <td>20000.0</td>
+      <td>0.7188</td>
+      <td>0.1782</td>
+      <td>0.0000</td>
+      <td>0.5915</td>
+      <td>0.7249</td>
+      <td>0.8554</td>
+      <td>1.0000</td>
+    </tr>
+    <tr>
+      <th>fatigue</th>
+      <td>20000.0</td>
+      <td>2.6633</td>
+      <td>0.8827</td>
+      <td>0.0000</td>
+      <td>2.0741</td>
+      <td>2.6871</td>
+      <td>3.2649</td>
+      <td>5.0000</td>
+    </tr>
+    <tr>
+      <th>spontaneity</th>
+      <td>20000.0</td>
+      <td>2.6982</td>
+      <td>0.8285</td>
+      <td>0.0000</td>
+      <td>2.1278</td>
+      <td>2.6967</td>
+      <td>3.2527</td>
+      <td>5.0000</td>
+    </tr>
+    <tr>
+      <th>selected_indoor_score</th>
+      <td>20000.0</td>
+      <td>2.5542</td>
+      <td>1.2086</td>
+      <td>0.0000</td>
+      <td>1.7701</td>
+      <td>2.5532</td>
+      <td>3.3326</td>
+      <td>5.0000</td>
+    </tr>
+    <tr>
+      <th>selected_cost_level</th>
+      <td>20000.0</td>
+      <td>2.1292</td>
+      <td>0.8295</td>
+      <td>0.0000</td>
+      <td>1.5928</td>
+      <td>2.1684</td>
+      <td>2.6919</td>
+      <td>5.0000</td>
+    </tr>
+    <tr>
+      <th>selected_photo_value</th>
+      <td>20000.0</td>
+      <td>2.8868</td>
+      <td>0.9936</td>
+      <td>0.0000</td>
+      <td>2.1708</td>
+      <td>2.7090</td>
+      <td>3.5003</td>
+      <td>5.0000</td>
+    </tr>
+    <tr>
+      <th>selected_nature_value</th>
+      <td>20000.0</td>
+      <td>1.6713</td>
+      <td>1.4684</td>
+      <td>0.0000</td>
+      <td>0.5910</td>
+      <td>1.2045</td>
+      <td>2.3450</td>
+      <td>5.0000</td>
+    </tr>
+    <tr>
+      <th>selected_culture_value</th>
+      <td>20000.0</td>
+      <td>2.3259</td>
+      <td>1.2065</td>
+      <td>0.0000</td>
+      <td>1.4796</td>
+      <td>2.1750</td>
+      <td>2.9362</td>
+      <td>5.0000</td>
+    </tr>
+    <tr>
+      <th>selected_food_value</th>
+      <td>20000.0</td>
+      <td>2.1786</td>
+      <td>1.2769</td>
+      <td>0.0000</td>
+      <td>1.2697</td>
+      <td>1.9841</td>
+      <td>2.7788</td>
+      <td>5.0000</td>
+    </tr>
+    <tr>
+      <th>selected_popularity</th>
+      <td>20000.0</td>
+      <td>2.8537</td>
+      <td>0.9896</td>
+      <td>0.0000</td>
+      <td>2.1712</td>
+      <td>2.7374</td>
+      <td>3.4220</td>
+      <td>5.0000</td>
+    </tr>
+  </tbody>
+</table>
+      </details>
+      <details>
+        <summary>Preview</summary>
+        <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>user_id</th>
+      <th>budget</th>
+      <th>available_time</th>
+      <th>weather_badness</th>
+      <th>social_context</th>
+      <th>fatigue</th>
+      <th>spontaneity</th>
+      <th>selected_indoor_score</th>
+      <th>selected_cost_level</th>
+      <th>selected_photo_value</th>
+      <th>selected_nature_value</th>
+      <th>selected_culture_value</th>
+      <th>selected_food_value</th>
+      <th>selected_popularity</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>1053.393201</td>
+      <td>3.955138</td>
+      <td>0.590514</td>
+      <td>0.685849</td>
+      <td>2.943235</td>
+      <td>1.965168</td>
+      <td>2.356229</td>
+      <td>2.937666</td>
+      <td>4.571216</td>
+      <td>1.171225</td>
+      <td>3.068567</td>
+      <td>2.222089</td>
+      <td>3.141789</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>1196.736279</td>
+      <td>3.390857</td>
+      <td>0.428240</td>
+      <td>0.562595</td>
+      <td>1.930222</td>
+      <td>2.227819</td>
+      <td>3.195276</td>
+      <td>3.154557</td>
+      <td>2.215713</td>
+      <td>0.773804</td>
+      <td>3.748030</td>
+      <td>1.058627</td>
+      <td>3.150348</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>611.595849</td>
+      <td>6.430477</td>
+      <td>0.322898</td>
+      <td>0.402742</td>
+      <td>0.736001</td>
+      <td>2.119725</td>
+      <td>0.000000</td>
+      <td>0.425857</td>
+      <td>2.694982</td>
+      <td>4.878309</td>
+      <td>1.310223</td>
+      <td>0.000000</td>
+      <td>2.110455</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>645.983183</td>
+      <td>4.723014</td>
+      <td>0.201342</td>
+      <td>0.818336</td>
+      <td>1.053347</td>
+      <td>3.996003</td>
+      <td>0.348715</td>
+      <td>1.722981</td>
+      <td>3.342355</td>
+      <td>4.016937</td>
+      <td>1.433063</td>
+      <td>1.015522</td>
+      <td>2.933479</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>727.067060</td>
+      <td>6.905701</td>
+      <td>0.611037</td>
+      <td>0.519170</td>
+      <td>2.373487</td>
+      <td>2.877543</td>
+      <td>0.617206</td>
+      <td>0.468943</td>
+      <td>2.682769</td>
+      <td>4.637618</td>
+      <td>2.348441</td>
+      <td>0.236200</td>
+      <td>1.369874</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>427.371839</td>
+      <td>2.419264</td>
+      <td>0.373514</td>
+      <td>0.766023</td>
+      <td>2.407837</td>
+      <td>2.069320</td>
+      <td>2.026109</td>
+      <td>2.110756</td>
+      <td>2.612932</td>
+      <td>0.419806</td>
+      <td>1.026121</td>
+      <td>4.557998</td>
+      <td>3.053526</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>674.453554</td>
+      <td>4.356986</td>
+      <td>0.157609</td>
+      <td>0.859777</td>
+      <td>1.897900</td>
+      <td>1.906823</td>
+      <td>2.058295</td>
+      <td>1.248070</td>
+      <td>3.253884</td>
+      <td>0.514335</td>
+      <td>2.016549</td>
+      <td>2.555284</td>
+      <td>2.831956</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>408.986293</td>
+      <td>4.100632</td>
+      <td>0.052486</td>
+      <td>0.769268</td>
+      <td>3.407751</td>
+      <td>1.623749</td>
+      <td>2.425227</td>
+      <td>2.422771</td>
+      <td>5.000000</td>
+      <td>0.755205</td>
+      <td>1.888536</td>
+      <td>1.854808</td>
+      <td>3.123088</td>
+    </tr>
+  </tbody>
+</table>
+      </details>
+    </section>
+    
+
+    <section>
+      <h3>02_clustered_users</h3>
+      <table>
+        <tr><th>Rows</th><td>20,000</td></tr>
+        <tr><th>Columns</th><td>24</td></tr>
+        <tr><th>Duplicated rows</th><td>0</td></tr>
+        <tr><th>Numeric columns</th><td>24</td></tr>
+        <tr><th>Non-numeric columns</th><td>0</td></tr>
+      </table>
+      <details>
+        <summary>Columns</summary>
+        <p class="mono">user_id, budget, available_time, weather_badness, social_context, fatigue, spontaneity, selected_indoor_score, selected_cost_level, selected_photo_value, selected_nature_value, selected_culture_value, selected_food_value, selected_popularity, soft_cluster, soft_cluster_confidence, cluster_prob_0, cluster_prob_1, cluster_prob_2, cluster_prob_3, cluster_prob_4, cluster_prob_5, cluster_prob_6, cluster_prob_7</p>
+      </details>
+      <details>
+        <summary>Missing values</summary>
+        <p>No missing values detected.</p>
+      </details>
+      <details>
+        <summary>Numeric summary</summary>
+        <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>user_id</th>
+      <td>20000.0</td>
+      <td>10000.5000</td>
+      <td>5773.6470</td>
+      <td>1.0000</td>
+      <td>5000.7500</td>
+      <td>10000.5000</td>
+      <td>15000.2500</td>
+      <td>20000.0000</td>
+    </tr>
+    <tr>
+      <th>budget</th>
+      <td>20000.0</td>
+      <td>825.7360</td>
+      <td>372.8759</td>
+      <td>140.9905</td>
+      <td>564.2413</td>
+      <td>747.5858</td>
+      <td>1007.8760</td>
+      <td>5000.0000</td>
+    </tr>
+    <tr>
+      <th>available_time</th>
+      <td>20000.0</td>
+      <td>4.4951</td>
+      <td>1.2027</td>
+      <td>1.0000</td>
+      <td>3.6716</td>
+      <td>4.4804</td>
+      <td>5.3079</td>
+      <td>9.1217</td>
+    </tr>
+    <tr>
+      <th>weather_badness</th>
+      <td>20000.0</td>
+      <td>0.2872</td>
+      <td>0.1679</td>
+      <td>0.0000</td>
+      <td>0.1595</td>
+      <td>0.2686</td>
+      <td>0.3984</td>
+      <td>0.9978</td>
+    </tr>
+    <tr>
+      <th>social_context</th>
+      <td>20000.0</td>
+      <td>0.7188</td>
+      <td>0.1782</td>
+      <td>0.0000</td>
+      <td>0.5915</td>
+      <td>0.7249</td>
+      <td>0.8554</td>
+      <td>1.0000</td>
+    </tr>
+    <tr>
+      <th>fatigue</th>
+      <td>20000.0</td>
+      <td>2.6633</td>
+      <td>0.8827</td>
+      <td>0.0000</td>
+      <td>2.0741</td>
+      <td>2.6871</td>
+      <td>3.2649</td>
+      <td>5.0000</td>
+    </tr>
+    <tr>
+      <th>spontaneity</th>
+      <td>20000.0</td>
+      <td>2.6982</td>
+      <td>0.8285</td>
+      <td>0.0000</td>
+      <td>2.1278</td>
+      <td>2.6967</td>
+      <td>3.2527</td>
+      <td>5.0000</td>
+    </tr>
+    <tr>
+      <th>selected_indoor_score</th>
+      <td>20000.0</td>
+      <td>2.5542</td>
+      <td>1.2086</td>
+      <td>0.0000</td>
+      <td>1.7701</td>
+      <td>2.5532</td>
+      <td>3.3326</td>
+      <td>5.0000</td>
+    </tr>
+    <tr>
+      <th>selected_cost_level</th>
+      <td>20000.0</td>
+      <td>2.1292</td>
+      <td>0.8295</td>
+      <td>0.0000</td>
+      <td>1.5928</td>
+      <td>2.1684</td>
+      <td>2.6919</td>
+      <td>5.0000</td>
+    </tr>
+    <tr>
+      <th>selected_photo_value</th>
+      <td>20000.0</td>
+      <td>2.8868</td>
+      <td>0.9936</td>
+      <td>0.0000</td>
+      <td>2.1708</td>
+      <td>2.7090</td>
+      <td>3.5003</td>
+      <td>5.0000</td>
+    </tr>
+    <tr>
+      <th>selected_nature_value</th>
+      <td>20000.0</td>
+      <td>1.6713</td>
+      <td>1.4684</td>
+      <td>0.0000</td>
+      <td>0.5910</td>
+      <td>1.2045</td>
+      <td>2.3450</td>
+      <td>5.0000</td>
+    </tr>
+    <tr>
+      <th>selected_culture_value</th>
+      <td>20000.0</td>
+      <td>2.3259</td>
+      <td>1.2065</td>
+      <td>0.0000</td>
+      <td>1.4796</td>
+      <td>2.1750</td>
+      <td>2.9362</td>
+      <td>5.0000</td>
+    </tr>
+    <tr>
+      <th>selected_food_value</th>
+      <td>20000.0</td>
+      <td>2.1786</td>
+      <td>1.2769</td>
+      <td>0.0000</td>
+      <td>1.2697</td>
+      <td>1.9841</td>
+      <td>2.7788</td>
+      <td>5.0000</td>
+    </tr>
+    <tr>
+      <th>selected_popularity</th>
+      <td>20000.0</td>
+      <td>2.8537</td>
+      <td>0.9896</td>
+      <td>0.0000</td>
+      <td>2.1712</td>
+      <td>2.7374</td>
+      <td>3.4220</td>
+      <td>5.0000</td>
+    </tr>
+    <tr>
+      <th>soft_cluster</th>
+      <td>20000.0</td>
+      <td>3.3910</td>
+      <td>2.3771</td>
+      <td>0.0000</td>
+      <td>1.0000</td>
+      <td>4.0000</td>
+      <td>5.0000</td>
+      <td>7.0000</td>
+    </tr>
+    <tr>
+      <th>soft_cluster_confidence</th>
+      <td>20000.0</td>
+      <td>0.9638</td>
+      <td>0.0931</td>
+      <td>0.3483</td>
+      <td>0.9873</td>
+      <td>0.9986</td>
+      <td>0.9999</td>
+      <td>1.0000</td>
+    </tr>
+    <tr>
+      <th>cluster_prob_0</th>
+      <td>20000.0</td>
+      <td>0.1577</td>
+      <td>0.3618</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>1.0000</td>
+    </tr>
+    <tr>
+      <th>cluster_prob_1</th>
+      <td>20000.0</td>
+      <td>0.1367</td>
+      <td>0.3365</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>1.0000</td>
+    </tr>
+    <tr>
+      <th>cluster_prob_2</th>
+      <td>20000.0</td>
+      <td>0.1358</td>
+      <td>0.3283</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0001</td>
+      <td>0.9999</td>
+    </tr>
+    <tr>
+      <th>cluster_prob_3</th>
+      <td>20000.0</td>
+      <td>0.0421</td>
+      <td>0.2004</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.9990</td>
+    </tr>
+    <tr>
+      <th>cluster_prob_4</th>
+      <td>20000.0</td>
+      <td>0.1110</td>
+      <td>0.3054</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>1.0000</td>
+    </tr>
+    <tr>
+      <th>cluster_prob_5</th>
+      <td>20000.0</td>
+      <td>0.1799</td>
+      <td>0.3578</td>
+      <td>0.0000</td>
+      <td>0.0001</td>
+      <td>0.0014</td>
+      <td>0.0488</td>
+      <td>1.0000</td>
+    </tr>
+    <tr>
+      <th>cluster_prob_6</th>
+      <td>20000.0</td>
+      <td>0.1325</td>
+      <td>0.3264</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0002</td>
+      <td>1.0000</td>
+    </tr>
+    <tr>
+      <th>cluster_prob_7</th>
+      <td>20000.0</td>
+      <td>0.1043</td>
+      <td>0.2991</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>0.0000</td>
+      <td>1.0000</td>
+    </tr>
+  </tbody>
+</table>
+      </details>
+      <details>
+        <summary>Preview</summary>
+        <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>user_id</th>
+      <th>budget</th>
+      <th>available_time</th>
+      <th>weather_badness</th>
+      <th>social_context</th>
+      <th>fatigue</th>
+      <th>spontaneity</th>
+      <th>selected_indoor_score</th>
+      <th>selected_cost_level</th>
+      <th>selected_photo_value</th>
+      <th>selected_nature_value</th>
+      <th>selected_culture_value</th>
+      <th>selected_food_value</th>
+      <th>selected_popularity</th>
+      <th>soft_cluster</th>
+      <th>soft_cluster_confidence</th>
+      <th>cluster_prob_0</th>
+      <th>cluster_prob_1</th>
+      <th>cluster_prob_2</th>
+      <th>cluster_prob_3</th>
+      <th>cluster_prob_4</th>
+      <th>cluster_prob_5</th>
+      <th>cluster_prob_6</th>
+      <th>cluster_prob_7</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>1053.393201</td>
+      <td>3.955138</td>
+      <td>0.590514</td>
+      <td>0.685849</td>
+      <td>2.943235</td>
+      <td>1.965168</td>
+      <td>2.356229</td>
+      <td>2.937666</td>
+      <td>4.571216</td>
+      <td>1.171225</td>
+      <td>3.068567</td>
+      <td>2.222089</td>
+      <td>3.141789</td>
+      <td>2</td>
+      <td>0.986750</td>
+      <td>2.145126e-20</td>
+      <td>3.977900e-08</td>
+      <td>9.867503e-01</td>
+      <td>0.0</td>
+      <td>9.679958e-10</td>
+      <td>1.165867e-02</td>
+      <td>1.591032e-03</td>
+      <td>1.230822e-11</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>1196.736279</td>
+      <td>3.390857</td>
+      <td>0.428240</td>
+      <td>0.562595</td>
+      <td>1.930222</td>
+      <td>2.227819</td>
+      <td>3.195276</td>
+      <td>3.154557</td>
+      <td>2.215713</td>
+      <td>0.773804</td>
+      <td>3.748030</td>
+      <td>1.058627</td>
+      <td>3.150348</td>
+      <td>1</td>
+      <td>0.850457</td>
+      <td>2.421704e-23</td>
+      <td>8.504571e-01</td>
+      <td>3.408521e-10</td>
+      <td>0.0</td>
+      <td>5.242009e-02</td>
+      <td>9.704015e-02</td>
+      <td>8.268981e-05</td>
+      <td>4.068269e-17</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>611.595849</td>
+      <td>6.430477</td>
+      <td>0.322898</td>
+      <td>0.402742</td>
+      <td>0.736001</td>
+      <td>2.119725</td>
+      <td>0.000000</td>
+      <td>0.425857</td>
+      <td>2.694982</td>
+      <td>4.878309</td>
+      <td>1.310223</td>
+      <td>0.000000</td>
+      <td>2.110455</td>
+      <td>0</td>
+      <td>1.000000</td>
+      <td>1.000000e+00</td>
+      <td>1.684146e-33</td>
+      <td>5.164808e-21</td>
+      <td>0.0</td>
+      <td>4.696574e-57</td>
+      <td>2.081786e-08</td>
+      <td>1.372510e-32</td>
+      <td>2.226987e-46</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>645.983183</td>
+      <td>4.723014</td>
+      <td>0.201342</td>
+      <td>0.818336</td>
+      <td>1.053347</td>
+      <td>3.996003</td>
+      <td>0.348715</td>
+      <td>1.722981</td>
+      <td>3.342355</td>
+      <td>4.016937</td>
+      <td>1.433063</td>
+      <td>1.015522</td>
+      <td>2.933479</td>
+      <td>0</td>
+      <td>0.999276</td>
+      <td>9.992760e-01</td>
+      <td>8.668168e-25</td>
+      <td>6.562802e-09</td>
+      <td>0.0</td>
+      <td>7.683384e-40</td>
+      <td>7.240314e-04</td>
+      <td>2.907561e-16</td>
+      <td>4.526423e-27</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>727.067060</td>
+      <td>6.905701</td>
+      <td>0.611037</td>
+      <td>0.519170</td>
+      <td>2.373487</td>
+      <td>2.877543</td>
+      <td>0.617206</td>
+      <td>0.468943</td>
+      <td>2.682769</td>
+      <td>4.637618</td>
+      <td>2.348441</td>
+      <td>0.236200</td>
+      <td>1.369874</td>
+      <td>0</td>
+      <td>0.999997</td>
+      <td>9.999974e-01</td>
+      <td>1.083507e-22</td>
+      <td>1.355155e-18</td>
+      <td>0.0</td>
+      <td>1.389922e-46</td>
+      <td>2.559957e-06</td>
+      <td>2.864983e-32</td>
+      <td>1.805655e-41</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>427.371839</td>
+      <td>2.419264</td>
+      <td>0.373514</td>
+      <td>0.766023</td>
+      <td>2.407837</td>
+      <td>2.069320</td>
+      <td>2.026109</td>
+      <td>2.110756</td>
+      <td>2.612932</td>
+      <td>0.419806</td>
+      <td>1.026121</td>
+      <td>4.557998</td>
+      <td>3.053526</td>
+      <td>7</td>
+      <td>0.999864</td>
+      <td>3.478214e-26</td>
+      <td>5.784158e-25</td>
+      <td>1.470251e-12</td>
+      <td>0.0</td>
+      <td>8.620537e-14</td>
+      <td>1.360073e-04</td>
+      <td>1.737459e-08</td>
+      <td>9.998640e-01</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>674.453554</td>
+      <td>4.356986</td>
+      <td>0.157609</td>
+      <td>0.859777</td>
+      <td>1.897900</td>
+      <td>1.906823</td>
+      <td>2.058295</td>
+      <td>1.248070</td>
+      <td>3.253884</td>
+      <td>0.514335</td>
+      <td>2.016549</td>
+      <td>2.555284</td>
+      <td>2.831956</td>
+      <td>5</td>
+      <td>0.963050</td>
+      <td>8.120308e-16</td>
+      <td>2.805059e-09</td>
+      <td>3.637015e-02</td>
+      <td>0.0</td>
+      <td>2.396189e-07</td>
+      <td>9.630497e-01</td>
+      <td>2.134303e-04</td>
+      <td>3.664634e-04</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>408.986293</td>
+      <td>4.100632</td>
+      <td>0.052486</td>
+      <td>0.769268</td>
+      <td>3.407751</td>
+      <td>1.623749</td>
+      <td>2.425227</td>
+      <td>2.422771</td>
+      <td>5.000000</td>
+      <td>0.755205</td>
+      <td>1.888536</td>
+      <td>1.854808</td>
+      <td>3.123088</td>
+      <td>2</td>
+      <td>0.999148</td>
+      <td>2.415466e-20</td>
+      <td>1.260101e-14</td>
+      <td>9.991478e-01</td>
+      <td>0.0</td>
+      <td>4.803023e-11</td>
+      <td>6.021384e-04</td>
+      <td>2.500346e-04</td>
+      <td>7.066245e-14</td>
+    </tr>
+  </tbody>
+</table>
+      </details>
+    </section>
+    
+
+    <section>
+      <h3>03_cluster_feature_mean</h3>
+      <table>
+        <tr><th>Rows</th><td>8</td></tr>
+        <tr><th>Columns</th><td>8</td></tr>
+        <tr><th>Duplicated rows</th><td>0</td></tr>
+        <tr><th>Numeric columns</th><td>8</td></tr>
+        <tr><th>Non-numeric columns</th><td>0</td></tr>
+      </table>
+      <details>
+        <summary>Columns</summary>
+        <p class="mono">soft_cluster, selected_indoor_score, selected_cost_level, selected_photo_value, selected_nature_value, selected_culture_value, selected_food_value, selected_popularity</p>
+      </details>
+      <details>
+        <summary>Missing values</summary>
+        <p>No missing values detected.</p>
+      </details>
+      <details>
+        <summary>Numeric summary</summary>
+        <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>soft_cluster</th>
+      <td>8.0</td>
+      <td>3.5000</td>
+      <td>2.4495</td>
+      <td>0.0000</td>
+      <td>1.7500</td>
+      <td>3.5000</td>
+      <td>5.2500</td>
+      <td>7.0000</td>
+    </tr>
+    <tr>
+      <th>selected_indoor_score</th>
+      <td>8.0</td>
+      <td>0.0369</td>
+      <td>0.8925</td>
+      <td>-1.4229</td>
+      <td>-0.3055</td>
+      <td>-0.1240</td>
+      <td>0.4376</td>
+      <td>1.6251</td>
+    </tr>
+    <tr>
+      <th>selected_cost_level</th>
+      <td>8.0</td>
+      <td>0.0518</td>
+      <td>0.6880</td>
+      <td>-1.3112</td>
+      <td>-0.1233</td>
+      <td>0.1942</td>
+      <td>0.2903</td>
+      <td>1.0221</td>
+    </tr>
+    <tr>
+      <th>selected_photo_value</th>
+      <td>8.0</td>
+      <td>-0.0790</td>
+      <td>0.8615</td>
+      <td>-0.7492</td>
+      <td>-0.6603</td>
+      <td>-0.3714</td>
+      <td>0.0120</td>
+      <td>1.7188</td>
+    </tr>
+    <tr>
+      <th>selected_nature_value</th>
+      <td>8.0</td>
+      <td>-0.1495</td>
+      <td>0.9211</td>
+      <td>-0.8555</td>
+      <td>-0.6895</td>
+      <td>-0.5157</td>
+      <td>-0.0900</td>
+      <td>1.9117</td>
+    </tr>
+    <tr>
+      <th>selected_culture_value</th>
+      <td>8.0</td>
+      <td>-0.0415</td>
+      <td>0.8894</td>
+      <td>-1.0898</td>
+      <td>-0.6278</td>
+      <td>-0.1559</td>
+      <td>0.1882</td>
+      <td>1.8256</td>
+    </tr>
+    <tr>
+      <th>selected_food_value</th>
+      <td>8.0</td>
+      <td>0.2572</td>
+      <td>1.1487</td>
+      <td>-1.0147</td>
+      <td>-0.4248</td>
+      <td>0.0277</td>
+      <td>0.5658</td>
+      <td>2.2248</td>
+    </tr>
+    <tr>
+      <th>selected_popularity</th>
+      <td>8.0</td>
+      <td>0.0258</td>
+      <td>0.8208</td>
+      <td>-1.0276</td>
+      <td>-0.3535</td>
+      <td>-0.1276</td>
+      <td>0.1130</td>
+      <td>1.7365</td>
+    </tr>
+  </tbody>
+</table>
+      </details>
+      <details>
+        <summary>Preview</summary>
+        <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>soft_cluster</th>
+      <th>selected_indoor_score</th>
+      <th>selected_cost_level</th>
+      <th>selected_photo_value</th>
+      <th>selected_nature_value</th>
+      <th>selected_culture_value</th>
+      <th>selected_food_value</th>
+      <th>selected_popularity</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>-1.422942</td>
+      <td>-1.311171</td>
+      <td>-0.269178</td>
+      <td>1.911674</td>
+      <td>-1.089844</td>
+      <td>-1.014654</td>
+      <td>-1.027617</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>0.687066</td>
+      <td>-0.400405</td>
+      <td>-0.473640</td>
+      <td>-0.568585</td>
+      <td>1.825585</td>
+      <td>-0.815368</td>
+      <td>-0.442536</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>-0.439138</td>
+      <td>-0.030987</td>
+      <td>1.718766</td>
+      <td>-0.259434</td>
+      <td>-0.081176</td>
+      <td>-0.294646</td>
+      <td>0.552090</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>-0.260955</td>
+      <td>0.207240</td>
+      <td>-0.690175</td>
+      <td>-0.689216</td>
+      <td>-0.645360</td>
+      <td>2.224786</td>
+      <td>-0.052698</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>1.625111</td>
+      <td>0.539590</td>
+      <td>-0.749241</td>
+      <td>-0.855475</td>
+      <td>0.390453</td>
+      <td>-0.111263</td>
+      <td>-0.323776</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>0.002882</td>
+      <td>0.191917</td>
+      <td>-0.216665</td>
+      <td>0.418464</td>
+      <td>0.120717</td>
+      <td>0.180770</td>
+      <td>-0.202431</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>0.354445</td>
+      <td>1.022081</td>
+      <td>0.698097</td>
+      <td>-0.462848</td>
+      <td>-0.230694</td>
+      <td>0.166702</td>
+      <td>1.736478</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>-0.250977</td>
+      <td>0.196440</td>
+      <td>-0.650327</td>
+      <td>-0.690537</td>
+      <td>-0.621934</td>
+      <td>1.720877</td>
+      <td>-0.033301</td>
+    </tr>
+  </tbody>
+</table>
+      </details>
+    </section>
+    
+
+    <section>
+      <h3>04_cluster_interpretation</h3>
+      <table>
+        <tr><th>Rows</th><td>80</td></tr>
+        <tr><th>Columns</th><td>4</td></tr>
+        <tr><th>Duplicated rows</th><td>0</td></tr>
+        <tr><th>Numeric columns</th><td>2</td></tr>
+        <tr><th>Non-numeric columns</th><td>2</td></tr>
+      </table>
+      <details>
+        <summary>Columns</summary>
+        <p class="mono">cluster, direction, feature, z_mean</p>
+      </details>
+      <details>
+        <summary>Missing values</summary>
+        <p>No missing values detected.</p>
+      </details>
+      <details>
+        <summary>Numeric summary</summary>
+        <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>cluster</th>
+      <td>80.0</td>
+      <td>3.5000</td>
+      <td>2.3057</td>
+      <td>0.0000</td>
+      <td>1.7500</td>
+      <td>3.5000</td>
+      <td>5.250</td>
+      <td>7.0000</td>
+    </tr>
+    <tr>
+      <th>z_mean</th>
+      <td>80.0</td>
+      <td>-0.0549</td>
+      <td>0.7623</td>
+      <td>-1.4229</td>
+      <td>-0.4974</td>
+      <td>-0.2095</td>
+      <td>0.193</td>
+      <td>2.2248</td>
+    </tr>
+  </tbody>
+</table>
+      </details>
+      <details>
+        <summary>Preview</summary>
+        <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>cluster</th>
+      <th>direction</th>
+      <th>feature</th>
+      <th>z_mean</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>high</td>
+      <td>selected_nature_value</td>
+      <td>1.911674</td>
+    </tr>
+    <tr>
+      <td>0</td>
+      <td>high</td>
+      <td>selected_photo_value</td>
+      <td>-0.269178</td>
+    </tr>
+    <tr>
+      <td>0</td>
+      <td>high</td>
+      <td>selected_food_value</td>
+      <td>-1.014654</td>
+    </tr>
+    <tr>
+      <td>0</td>
+      <td>high</td>
+      <td>selected_popularity</td>
+      <td>-1.027617</td>
+    </tr>
+    <tr>
+      <td>0</td>
+      <td>high</td>
+      <td>selected_culture_value</td>
+      <td>-1.089844</td>
+    </tr>
+    <tr>
+      <td>0</td>
+      <td>low</td>
+      <td>selected_indoor_score</td>
+      <td>-1.422942</td>
+    </tr>
+    <tr>
+      <td>0</td>
+      <td>low</td>
+      <td>selected_cost_level</td>
+      <td>-1.311171</td>
+    </tr>
+    <tr>
+      <td>0</td>
+      <td>low</td>
+      <td>selected_culture_value</td>
+      <td>-1.089844</td>
+    </tr>
+  </tbody>
+</table>
+      </details>
+    </section>
+    
+
+    <section>
+      <h3>05_cluster_label_summary</h3>
+      <table>
+        <tr><th>Rows</th><td>8</td></tr>
+        <tr><th>Columns</th><td>6</td></tr>
+        <tr><th>Duplicated rows</th><td>0</td></tr>
+        <tr><th>Numeric columns</th><td>1</td></tr>
+        <tr><th>Non-numeric columns</th><td>5</td></tr>
+      </table>
+      <details>
+        <summary>Columns</summary>
+        <p class="mono">cluster, cluster_label, label_basis, description, top_high_features, top_low_features</p>
+      </details>
+      <details>
+        <summary>Missing values</summary>
+        <p>No missing values detected.</p>
+      </details>
+      <details>
+        <summary>Numeric summary</summary>
+        <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>cluster</th>
+      <td>8.0</td>
+      <td>3.5</td>
+      <td>2.4495</td>
+      <td>0.0</td>
+      <td>1.75</td>
+      <td>3.5</td>
+      <td>5.25</td>
+      <td>7.0</td>
+    </tr>
+  </tbody>
+</table>
+      </details>
+      <details>
+        <summary>Preview</summary>
+        <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>cluster</th>
+      <th>cluster_label</th>
+      <th>label_basis</th>
+      <th>description</th>
+      <th>top_high_features</th>
+      <th>top_low_features</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>0</td>
+      <td>自然景點導向型</td>
+      <td>命名依據：自然景觀偏好=1.91；低特徵參考：室內偏好=-1.42、消費等級偏好=-1.31、文化價值偏好=-1.09</td>
+      <td>此 cluster 是根據使用者景點偏好特徵訓練而成，不使用預算、天氣、疲勞等情境欄位決定族群。主要高於平均的偏好為：自然景觀偏好(1.91)、拍照價值偏好(-0.27)、美食價值偏好(-1.01)。主要低於平均的偏好為：室內偏好(-1.42)、消費等級偏好(-1.31)、文化價值偏好(-1.09)。</td>
+      <td>selected_nature_value:1.912; selected_photo_value:-0.269; selected_food_value:-1.015; selected_popularity:-1.028; selected_culture_value:-1.090</td>
+      <td>selected_indoor_score:-1.423; selected_cost_level:-1.311; selected_culture_value:-1.090; selected_popularity:-1.028; selected_food_value:-1.015</td>
+    </tr>
+    <tr>
+      <td>1</td>
+      <td>文化探索型</td>
+      <td>命名依據：文化價值偏好=1.83、室內偏好=0.69；低特徵參考：美食價值偏好=-0.82、自然景觀偏好=-0.57</td>
+      <td>此 cluster 是根據使用者景點偏好特徵訓練而成，不使用預算、天氣、疲勞等情境欄位決定族群。主要高於平均的偏好為：文化價值偏好(1.83)、室內偏好(0.69)、消費等級偏好(-0.40)。主要低於平均的偏好為：美食價值偏好(-0.82)、自然景觀偏好(-0.57)、拍照價值偏好(-0.47)。</td>
+      <td>selected_culture_value:1.826; selected_indoor_score:0.687; selected_cost_level:-0.400; selected_popularity:-0.443; selected_photo_value:-0.474</td>
+      <td>selected_food_value:-0.815; selected_nature_value:-0.569; selected_photo_value:-0.474; selected_popularity:-0.443; selected_cost_level:-0.400</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>拍照導向型</td>
+      <td>命名依據：拍照價值偏好=1.72、熱門程度偏好=0.55；低特徵參考：無明顯低於平均特徵</td>
+      <td>此 cluster 是根據使用者景點偏好特徵訓練而成，不使用預算、天氣、疲勞等情境欄位決定族群。主要高於平均的偏好為：拍照價值偏好(1.72)、熱門程度偏好(0.55)、消費等級偏好(-0.03)。主要低於平均的偏好為：室內偏好(-0.44)、美食價值偏好(-0.29)、自然景觀偏好(-0.26)。</td>
+      <td>selected_photo_value:1.719; selected_popularity:0.552; selected_cost_level:-0.031; selected_culture_value:-0.081; selected_nature_value:-0.259</td>
+      <td>selected_indoor_score:-0.439; selected_food_value:-0.295; selected_nature_value:-0.259; selected_culture_value:-0.081; selected_cost_level:-0.031</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>美食導向型</td>
+      <td>命名依據：美食價值偏好=2.22；低特徵參考：拍照價值偏好=-0.69、自然景觀偏好=-0.69、文化價值偏好=-0.65</td>
+      <td>此 cluster 是根據使用者景點偏好特徵訓練而成，不使用預算、天氣、疲勞等情境欄位決定族群。主要高於平均的偏好為：美食價值偏好(2.22)、消費等級偏好(0.21)、熱門程度偏好(-0.05)。主要低於平均的偏好為：拍照價值偏好(-0.69)、自然景觀偏好(-0.69)、文化價值偏好(-0.65)。</td>
+      <td>selected_food_value:2.225; selected_cost_level:0.207; selected_popularity:-0.053; selected_indoor_score:-0.261; selected_culture_value:-0.645</td>
+      <td>selected_photo_value:-0.690; selected_nature_value:-0.689; selected_culture_value:-0.645; selected_indoor_score:-0.261; selected_popularity:-0.053</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>室內活動偏好型</td>
+      <td>命名依據：室內偏好=1.63、消費等級偏好=0.54；低特徵參考：自然景觀偏好=-0.86、拍照價值偏好=-0.75</td>
+      <td>此 cluster 是根據使用者景點偏好特徵訓練而成，不使用預算、天氣、疲勞等情境欄位決定族群。主要高於平均的偏好為：室內偏好(1.63)、消費等級偏好(0.54)、文化價值偏好(0.39)。主要低於平均的偏好為：自然景觀偏好(-0.86)、拍照價值偏好(-0.75)、熱門程度偏好(-0.32)。</td>
+      <td>selected_indoor_score:1.625; selected_cost_level:0.540; selected_culture_value:0.390; selected_food_value:-0.111; selected_popularity:-0.324</td>
+      <td>selected_nature_value:-0.855; selected_photo_value:-0.749; selected_popularity:-0.324; selected_food_value:-0.111; selected_culture_value:0.390</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>偏好不明顯型</td>
+      <td>命名依據：無明顯高於平均特徵；低特徵參考：無明顯低於平均特徵</td>
+      <td>此 cluster 是根據使用者景點偏好特徵訓練而成，不使用預算、天氣、疲勞等情境欄位決定族群。主要高於平均的偏好為：自然景觀偏好(0.42)、消費等級偏好(0.19)、美食價值偏好(0.18)。主要低於平均的偏好為：拍照價值偏好(-0.22)、熱門程度偏好(-0.20)、室內偏好(0.00)。</td>
+      <td>selected_nature_value:0.418; selected_cost_level:0.192; selected_food_value:0.181; selected_culture_value:0.121; selected_indoor_score:0.003</td>
+      <td>selected_photo_value:-0.217; selected_popularity:-0.202; selected_indoor_score:0.003; selected_culture_value:0.121; selected_food_value:0.181</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>熱門＋高消費導向型</td>
+      <td>命名依據：熱門程度偏好=1.74、消費等級偏好=1.02、拍照價值偏好=0.70；低特徵參考：無明顯低於平均特徵</td>
+      <td>此 cluster 是根據使用者景點偏好特徵訓練而成，不使用預算、天氣、疲勞等情境欄位決定族群。主要高於平均的偏好為：熱門程度偏好(1.74)、消費等級偏好(1.02)、拍照價值偏好(0.70)。主要低於平均的偏好為：自然景觀偏好(-0.46)、文化價值偏好(-0.23)、美食價值偏好(0.17)。</td>
+      <td>selected_popularity:1.736; selected_cost_level:1.022; selected_photo_value:0.698; selected_indoor_score:0.354; selected_food_value:0.167</td>
+      <td>selected_nature_value:-0.463; selected_culture_value:-0.231; selected_food_value:0.167; selected_indoor_score:0.354; selected_photo_value:0.698</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>美食導向型</td>
+      <td>命名依據：美食價值偏好=1.72；低特徵參考：自然景觀偏好=-0.69、拍照價值偏好=-0.65、文化價值偏好=-0.62</td>
+      <td>此 cluster 是根據使用者景點偏好特徵訓練而成，不使用預算、天氣、疲勞等情境欄位決定族群。主要高於平均的偏好為：美食價值偏好(1.72)、消費等級偏好(0.20)、熱門程度偏好(-0.03)。主要低於平均的偏好為：自然景觀偏好(-0.69)、拍照價值偏好(-0.65)、文化價值偏好(-0.62)。</td>
+      <td>selected_food_value:1.721; selected_cost_level:0.196; selected_popularity:-0.033; selected_indoor_score:-0.251; selected_culture_value:-0.622</td>
+      <td>selected_nature_value:-0.691; selected_photo_value:-0.650; selected_culture_value:-0.622; selected_indoor_score:-0.251; selected_popularity:-0.033</td>
+    </tr>
+  </tbody>
+</table>
+      </details>
+    </section>
+    
+
+    <section>
+      <h3>06_attractions</h3>
+      <table>
+        <tr><th>Rows</th><td>300</td></tr>
+        <tr><th>Columns</th><td>17</td></tr>
+        <tr><th>Duplicated rows</th><td>0</td></tr>
+        <tr><th>Numeric columns</th><td>12</td></tr>
+        <tr><th>Non-numeric columns</th><td>5</td></tr>
+      </table>
+      <details>
+        <summary>Columns</summary>
+        <p class="mono">attraction_id, name, realistic_scene_name, attraction_type, latitude, longitude, osm_id, osm_category, cost_level, indoor_score, photo_value, nature_value, culture_value, food_value, popularity, estimated_time, distance_from_center_km</p>
+      </details>
+      <details>
+        <summary>Missing values</summary>
+        <p>No missing values detected.</p>
+      </details>
+      <details>
+        <summary>Numeric summary</summary>
+        <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>attraction_id</th>
+      <td>300.0</td>
+      <td>150.5000</td>
+      <td>86.7468</td>
+      <td>1.0000</td>
+      <td>75.7500</td>
+      <td>150.5000</td>
+      <td>225.2500</td>
+      <td>300.0000</td>
+    </tr>
+    <tr>
+      <th>latitude</th>
+      <td>300.0</td>
+      <td>25.0550</td>
+      <td>0.0272</td>
+      <td>24.9680</td>
+      <td>25.0376</td>
+      <td>25.0549</td>
+      <td>25.0799</td>
+      <td>25.1406</td>
+    </tr>
+    <tr>
+      <th>longitude</th>
+      <td>300.0</td>
+      <td>121.5502</td>
+      <td>0.0264</td>
+      <td>121.4971</td>
+      <td>121.5326</td>
+      <td>121.5412</td>
+      <td>121.5673</td>
+      <td>121.6179</td>
+    </tr>
+    <tr>
+      <th>cost_level</th>
+      <td>300.0</td>
+      <td>2.6007</td>
+      <td>0.5876</td>
+      <td>0.8000</td>
+      <td>2.8000</td>
+      <td>2.8000</td>
+      <td>2.8000</td>
+      <td>3.4000</td>
+    </tr>
+    <tr>
+      <th>indoor_score</th>
+      <td>300.0</td>
+      <td>3.8677</td>
+      <td>0.6612</td>
+      <td>0.3000</td>
+      <td>4.0000</td>
+      <td>4.0000</td>
+      <td>4.2000</td>
+      <td>4.6000</td>
+    </tr>
+    <tr>
+      <th>photo_value</th>
+      <td>300.0</td>
+      <td>3.0460</td>
+      <td>0.6384</td>
+      <td>2.6000</td>
+      <td>2.6000</td>
+      <td>2.6000</td>
+      <td>4.0000</td>
+      <td>4.8000</td>
+    </tr>
+    <tr>
+      <th>nature_value</th>
+      <td>300.0</td>
+      <td>0.4357</td>
+      <td>0.4487</td>
+      <td>0.2000</td>
+      <td>0.3000</td>
+      <td>0.3000</td>
+      <td>0.4000</td>
+      <td>3.8000</td>
+    </tr>
+    <tr>
+      <th>culture_value</th>
+      <td>300.0</td>
+      <td>2.0143</td>
+      <td>0.9226</td>
+      <td>1.0000</td>
+      <td>1.6000</td>
+      <td>1.6000</td>
+      <td>2.0000</td>
+      <td>5.0000</td>
+    </tr>
+    <tr>
+      <th>food_value</th>
+      <td>300.0</td>
+      <td>4.1017</td>
+      <td>1.1650</td>
+      <td>0.8000</td>
+      <td>4.0000</td>
+      <td>4.7000</td>
+      <td>4.7000</td>
+      <td>4.7000</td>
+    </tr>
+    <tr>
+      <th>popularity</th>
+      <td>300.0</td>
+      <td>3.4517</td>
+      <td>0.3191</td>
+      <td>2.5000</td>
+      <td>3.4000</td>
+      <td>3.4000</td>
+      <td>3.6000</td>
+      <td>4.7000</td>
+    </tr>
+    <tr>
+      <th>estimated_time</th>
+      <td>300.0</td>
+      <td>1.4197</td>
+      <td>0.1703</td>
+      <td>1.3000</td>
+      <td>1.4000</td>
+      <td>1.4000</td>
+      <td>1.4000</td>
+      <td>2.3000</td>
+    </tr>
+    <tr>
+      <th>distance_from_center_km</th>
+      <td>300.0</td>
+      <td>4.5564</td>
+      <td>1.9382</td>
+      <td>0.3449</td>
+      <td>3.5082</td>
+      <td>4.4316</td>
+      <td>5.5207</td>
+      <td>13.3852</td>
+    </tr>
+  </tbody>
+</table>
+      </details>
+      <details>
+        <summary>Preview</summary>
+        <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>attraction_id</th>
+      <th>name</th>
+      <th>realistic_scene_name</th>
+      <th>attraction_type</th>
+      <th>latitude</th>
+      <th>longitude</th>
+      <th>osm_id</th>
+      <th>osm_category</th>
+      <th>cost_level</th>
+      <th>indoor_score</th>
+      <th>photo_value</th>
+      <th>nature_value</th>
+      <th>culture_value</th>
+      <th>food_value</th>
+      <th>popularity</th>
+      <th>estimated_time</th>
+      <th>distance_from_center_km</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1</td>
+      <td>OSM_001_restaurant</td>
+      <td>温德德式烘焙餐館</td>
+      <td>restaurant</td>
+      <td>25.106493</td>
+      <td>121.524372</td>
+      <td>node/283374379</td>
+      <td>餐廳</td>
+      <td>2.8</td>
+      <td>4.0</td>
+      <td>2.6</td>
+      <td>0.3</td>
+      <td>1.6</td>
+      <td>4.7</td>
+      <td>3.8</td>
+      <td>1.4</td>
+      <td>9.157402</td>
+    </tr>
+    <tr>
+      <td>2</td>
+      <td>OSM_002_restaurant</td>
+      <td>初泰</td>
+      <td>restaurant</td>
+      <td>25.032177</td>
+      <td>121.568701</td>
+      <td>node/299002404</td>
+      <td>餐廳</td>
+      <td>2.8</td>
+      <td>4.0</td>
+      <td>2.6</td>
+      <td>0.3</td>
+      <td>1.6</td>
+      <td>4.7</td>
+      <td>3.6</td>
+      <td>1.4</td>
+      <td>0.344942</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td>OSM_003_cafe</td>
+      <td>星巴克</td>
+      <td>cafe</td>
+      <td>25.021736</td>
+      <td>121.541262</td>
+      <td>node/469620172</td>
+      <td>咖啡廳</td>
+      <td>2.8</td>
+      <td>4.2</td>
+      <td>4.0</td>
+      <td>0.4</td>
+      <td>2.0</td>
+      <td>4.0</td>
+      <td>3.9</td>
+      <td>1.3</td>
+      <td>2.735573</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>OSM_004_cafe</td>
+      <td>星巴克</td>
+      <td>cafe</td>
+      <td>25.017474</td>
+      <td>121.531872</td>
+      <td>node/469620173</td>
+      <td>咖啡廳</td>
+      <td>2.8</td>
+      <td>4.2</td>
+      <td>4.0</td>
+      <td>0.4</td>
+      <td>2.0</td>
+      <td>4.0</td>
+      <td>3.6</td>
+      <td>1.3</td>
+      <td>3.793764</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td>OSM_005_restaurant</td>
+      <td>西堤牛排</td>
+      <td>restaurant</td>
+      <td>25.042013</td>
+      <td>121.513295</td>
+      <td>node/469812996</td>
+      <td>餐廳</td>
+      <td>2.8</td>
+      <td>4.0</td>
+      <td>2.6</td>
+      <td>0.3</td>
+      <td>1.6</td>
+      <td>4.7</td>
+      <td>4.1</td>
+      <td>1.4</td>
+      <td>5.344154</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td>OSM_006_cafe</td>
+      <td>星巴克</td>
+      <td>cafe</td>
+      <td>25.042400</td>
+      <td>121.513032</td>
+      <td>node/469812997</td>
+      <td>咖啡廳</td>
+      <td>2.8</td>
+      <td>4.2</td>
+      <td>4.0</td>
+      <td>0.4</td>
+      <td>2.0</td>
+      <td>4.0</td>
+      <td>3.9</td>
+      <td>1.3</td>
+      <td>5.378412</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>OSM_007_place_of_worship</td>
+      <td>台北真理堂</td>
+      <td>place_of_worship</td>
+      <td>25.018549</td>
+      <td>121.533155</td>
+      <td>node/470241905</td>
+      <td>宗教文化景點</td>
+      <td>0.8</td>
+      <td>2.8</td>
+      <td>3.2</td>
+      <td>1.0</td>
+      <td>4.3</td>
+      <td>1.0</td>
+      <td>3.7</td>
+      <td>1.5</td>
+      <td>3.624499</td>
+    </tr>
+    <tr>
+      <td>8</td>
+      <td>OSM_008_restaurant</td>
+      <td>韓國時間（即將開幕）</td>
+      <td>restaurant</td>
+      <td>25.017156</td>
+      <td>121.533151</td>
+      <td>node/471718722</td>
+      <td>餐廳</td>
+      <td>2.8</td>
+      <td>4.0</td>
+      <td>2.6</td>
+      <td>0.3</td>
+      <td>1.6</td>
+      <td>4.7</td>
+      <td>3.4</td>
+      <td>1.4</td>
+      <td>3.696229</td>
+    </tr>
+  </tbody>
+</table>
+      </details>
+    </section>
+    
+
+    <section>
+      <h3>07_user_interactions</h3>
+      <table>
+        <tr><th>Rows</th><td>100,000</td></tr>
+        <tr><th>Columns</th><td>5</td></tr>
+        <tr><th>Duplicated rows</th><td>0</td></tr>
+        <tr><th>Numeric columns</th><td>5</td></tr>
+        <tr><th>Non-numeric columns</th><td>0</td></tr>
+      </table>
+      <details>
+        <summary>Columns</summary>
+        <p class="mono">user_id, soft_cluster, attraction_id, rating, clicked</p>
+      </details>
+      <details>
+        <summary>Missing values</summary>
+        <p>No missing values detected.</p>
+      </details>
+      <details>
+        <summary>Numeric summary</summary>
+        <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>user_id</th>
+      <td>100000.0</td>
+      <td>10000.5000</td>
+      <td>5773.5316</td>
+      <td>1.0000</td>
+      <td>5000.75</td>
+      <td>10000.5000</td>
+      <td>15000.2500</td>
+      <td>20000.0</td>
+    </tr>
+    <tr>
+      <th>soft_cluster</th>
+      <td>100000.0</td>
+      <td>3.3910</td>
+      <td>2.3770</td>
+      <td>0.0000</td>
+      <td>1.00</td>
+      <td>4.0000</td>
+      <td>5.0000</td>
+      <td>7.0</td>
+    </tr>
+    <tr>
+      <th>attraction_id</th>
+      <td>100000.0</td>
+      <td>149.9155</td>
+      <td>86.7683</td>
+      <td>1.0000</td>
+      <td>74.00</td>
+      <td>150.0000</td>
+      <td>225.0000</td>
+      <td>300.0</td>
+    </tr>
+    <tr>
+      <th>rating</th>
+      <td>100000.0</td>
+      <td>4.1613</td>
+      <td>0.5074</td>
+      <td>1.7035</td>
+      <td>3.83</td>
+      <td>4.1912</td>
+      <td>4.5336</td>
+      <td>5.0</td>
+    </tr>
+    <tr>
+      <th>clicked</th>
+      <td>100000.0</td>
+      <td>0.6428</td>
+      <td>0.4792</td>
+      <td>0.0000</td>
+      <td>0.00</td>
+      <td>1.0000</td>
+      <td>1.0000</td>
+      <td>1.0</td>
+    </tr>
+  </tbody>
+</table>
+      </details>
+      <details>
+        <summary>Preview</summary>
+        <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>user_id</th>
+      <th>soft_cluster</th>
+      <th>attraction_id</th>
+      <th>rating</th>
+      <th>clicked</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>68</td>
+      <td>4.227626</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>110</td>
+      <td>4.963152</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>97</td>
+      <td>4.517700</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>114</td>
+      <td>5.000000</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>206</td>
+      <td>4.786777</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>2.0</td>
+      <td>1.0</td>
+      <td>201</td>
+      <td>4.583880</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>2.0</td>
+      <td>1.0</td>
+      <td>212</td>
+      <td>4.300384</td>
+      <td>1</td>
+    </tr>
+    <tr>
+      <td>2.0</td>
+      <td>1.0</td>
+      <td>230</td>
+      <td>3.915355</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+      </details>
+    </section>
+    
+
+    <section>
+      <h3>08_all_recommendation_candidates</h3>
+      <table>
+        <tr><th>Rows</th><td>5,900,000</td></tr>
+        <tr><th>Columns</th><td>12</td></tr>
+        <tr><th>Duplicated rows</th><td>0</td></tr>
+        <tr><th>Numeric columns</th><td>9</td></tr>
+        <tr><th>Non-numeric columns</th><td>3</td></tr>
+      </table>
+      <details>
+        <summary>Columns</summary>
+        <p class="mono">user_id, soft_cluster, cluster_confidence, attraction_id, name, realistic_scene_name, attraction_type, personal_score, cluster_score, collaborative_score, hybrid_score, recommendation_score</p>
+      </details>
+      <details>
+        <summary>Missing values</summary>
+        <p>No missing values detected.</p>
+      </details>
+      <details>
+        <summary>Numeric summary</summary>
+        <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>user_id</th>
+      <td>5900000.0</td>
+      <td>10000.5000</td>
+      <td>5773.5032</td>
+      <td>1.0000</td>
+      <td>5000.7500</td>
+      <td>10000.5000</td>
+      <td>15000.2500</td>
+      <td>20000.0000</td>
+    </tr>
+    <tr>
+      <th>soft_cluster</th>
+      <td>5900000.0</td>
+      <td>3.3910</td>
+      <td>2.3770</td>
+      <td>0.0000</td>
+      <td>1.0000</td>
+      <td>4.0000</td>
+      <td>5.0000</td>
+      <td>7.0000</td>
+    </tr>
+    <tr>
+      <th>cluster_confidence</th>
+      <td>5900000.0</td>
+      <td>0.9638</td>
+      <td>0.0931</td>
+      <td>0.3483</td>
+      <td>0.9873</td>
+      <td>0.9986</td>
+      <td>0.9999</td>
+      <td>1.0000</td>
+    </tr>
+    <tr>
+      <th>attraction_id</th>
+      <td>5900000.0</td>
+      <td>150.5099</td>
+      <td>86.5992</td>
+      <td>1.0000</td>
+      <td>76.0000</td>
+      <td>151.0000</td>
+      <td>226.0000</td>
+      <td>300.0000</td>
+    </tr>
+    <tr>
+      <th>personal_score</th>
+      <td>5900000.0</td>
+      <td>0.8295</td>
+      <td>0.1404</td>
+      <td>0.1536</td>
+      <td>0.7845</td>
+      <td>0.8773</td>
+      <td>0.9288</td>
+      <td>0.9989</td>
+    </tr>
+    <tr>
+      <th>cluster_score</th>
+      <td>5900000.0</td>
+      <td>0.8505</td>
+      <td>0.1313</td>
+      <td>0.5495</td>
+      <td>0.8026</td>
+      <td>0.9046</td>
+      <td>0.9321</td>
+      <td>0.9855</td>
+    </tr>
+    <tr>
+      <th>collaborative_score</th>
+      <td>5900000.0</td>
+      <td>0.7873</td>
+      <td>0.0660</td>
+      <td>0.4972</td>
+      <td>0.7716</td>
+      <td>0.8070</td>
+      <td>0.8305</td>
+      <td>0.9208</td>
+    </tr>
+    <tr>
+      <th>hybrid_score</th>
+      <td>5900000.0</td>
+      <td>0.8235</td>
+      <td>0.1178</td>
+      <td>0.2976</td>
+      <td>0.7915</td>
+      <td>0.8654</td>
+      <td>0.9049</td>
+      <td>0.9755</td>
+    </tr>
+    <tr>
+      <th>recommendation_score</th>
+      <td>5900000.0</td>
+      <td>0.8235</td>
+      <td>0.1178</td>
+      <td>0.2976</td>
+      <td>0.7915</td>
+      <td>0.8654</td>
+      <td>0.9049</td>
+      <td>0.9755</td>
+    </tr>
+  </tbody>
+</table>
+      </details>
+      <details>
+        <summary>Preview</summary>
+        <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>user_id</th>
+      <th>soft_cluster</th>
+      <th>cluster_confidence</th>
+      <th>attraction_id</th>
+      <th>name</th>
+      <th>realistic_scene_name</th>
+      <th>attraction_type</th>
+      <th>personal_score</th>
+      <th>cluster_score</th>
+      <th>collaborative_score</th>
+      <th>hybrid_score</th>
+      <th>recommendation_score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>0.98675</td>
+      <td>1</td>
+      <td>OSM_001_restaurant</td>
+      <td>温德德式烘焙餐館</td>
+      <td>restaurant</td>
+      <td>0.878762</td>
+      <td>0.858551</td>
+      <td>0.797328</td>
+      <td>0.854540</td>
+      <td>0.854540</td>
+    </tr>
+    <tr>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>0.98675</td>
+      <td>2</td>
+      <td>OSM_002_restaurant</td>
+      <td>初泰</td>
+      <td>restaurant</td>
+      <td>0.878471</td>
+      <td>0.856311</td>
+      <td>0.761543</td>
+      <td>0.845054</td>
+      <td>0.845054</td>
+    </tr>
+    <tr>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>0.98675</td>
+      <td>3</td>
+      <td>OSM_003_cafe</td>
+      <td>星巴克</td>
+      <td>cafe</td>
+      <td>0.939499</td>
+      <td>0.928927</td>
+      <td>0.812676</td>
+      <td>0.905927</td>
+      <td>0.905927</td>
+    </tr>
+    <tr>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>0.98675</td>
+      <td>4</td>
+      <td>OSM_004_cafe</td>
+      <td>星巴克</td>
+      <td>cafe</td>
+      <td>0.939552</td>
+      <td>0.926338</td>
+      <td>0.815486</td>
+      <td>0.906140</td>
+      <td>0.906140</td>
+    </tr>
+    <tr>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>0.98675</td>
+      <td>5</td>
+      <td>OSM_005_restaurant</td>
+      <td>西堤牛排</td>
+      <td>restaurant</td>
+      <td>0.878454</td>
+      <td>0.861104</td>
+      <td>0.805690</td>
+      <td>0.856952</td>
+      <td>0.856952</td>
+    </tr>
+    <tr>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>0.98675</td>
+      <td>6</td>
+      <td>OSM_006_cafe</td>
+      <td>星巴克</td>
+      <td>cafe</td>
+      <td>0.939499</td>
+      <td>0.928927</td>
+      <td>0.797892</td>
+      <td>0.902258</td>
+      <td>0.902258</td>
+    </tr>
+    <tr>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>0.98675</td>
+      <td>7</td>
+      <td>OSM_007_place_of_worship</td>
+      <td>台北真理堂</td>
+      <td>place_of_worship</td>
+      <td>0.914117</td>
+      <td>0.909053</td>
+      <td>0.838867</td>
+      <td>0.894437</td>
+      <td>0.894437</td>
+    </tr>
+    <tr>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>0.98675</td>
+      <td>8</td>
+      <td>OSM_008_restaurant</td>
+      <td>韓國時間（即將開幕）</td>
+      <td>restaurant</td>
+      <td>0.877752</td>
+      <td>0.853613</td>
+      <td>0.807034</td>
+      <td>0.855410</td>
+      <td>0.855410</td>
+    </tr>
+  </tbody>
+</table>
+      </details>
+    </section>
+    
+
+    <section>
+      <h3>09_recommendations</h3>
+      <table>
+        <tr><th>Rows</th><td>100,000</td></tr>
+        <tr><th>Columns</th><td>12</td></tr>
+        <tr><th>Duplicated rows</th><td>0</td></tr>
+        <tr><th>Numeric columns</th><td>9</td></tr>
+        <tr><th>Non-numeric columns</th><td>3</td></tr>
+      </table>
+      <details>
+        <summary>Columns</summary>
+        <p class="mono">user_id, soft_cluster, cluster_confidence, attraction_id, name, realistic_scene_name, attraction_type, personal_score, cluster_score, collaborative_score, hybrid_score, recommendation_score</p>
+      </details>
+      <details>
+        <summary>Missing values</summary>
+        <p>No missing values detected.</p>
+      </details>
+      <details>
+        <summary>Numeric summary</summary>
+        <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>user_id</th>
+      <td>100000.0</td>
+      <td>10000.5000</td>
+      <td>5773.5316</td>
+      <td>1.0000</td>
+      <td>5000.7500</td>
+      <td>10000.5000</td>
+      <td>15000.2500</td>
+      <td>20000.0000</td>
+    </tr>
+    <tr>
+      <th>soft_cluster</th>
+      <td>100000.0</td>
+      <td>3.3910</td>
+      <td>2.3770</td>
+      <td>0.0000</td>
+      <td>1.0000</td>
+      <td>4.0000</td>
+      <td>5.0000</td>
+      <td>7.0000</td>
+    </tr>
+    <tr>
+      <th>cluster_confidence</th>
+      <td>100000.0</td>
+      <td>0.9638</td>
+      <td>0.0931</td>
+      <td>0.3483</td>
+      <td>0.9873</td>
+      <td>0.9986</td>
+      <td>0.9999</td>
+      <td>1.0000</td>
+    </tr>
+    <tr>
+      <th>attraction_id</th>
+      <td>100000.0</td>
+      <td>135.7082</td>
+      <td>79.6923</td>
+      <td>1.0000</td>
+      <td>50.0000</td>
+      <td>128.0000</td>
+      <td>197.0000</td>
+      <td>300.0000</td>
+    </tr>
+    <tr>
+      <th>personal_score</th>
+      <td>100000.0</td>
+      <td>0.9202</td>
+      <td>0.0727</td>
+      <td>0.3641</td>
+      <td>0.9053</td>
+      <td>0.9426</td>
+      <td>0.9647</td>
+      <td>0.9989</td>
+    </tr>
+    <tr>
+      <th>cluster_score</th>
+      <td>100000.0</td>
+      <td>0.9391</td>
+      <td>0.0574</td>
+      <td>0.5839</td>
+      <td>0.9289</td>
+      <td>0.9446</td>
+      <td>0.9743</td>
+      <td>0.9855</td>
+    </tr>
+    <tr>
+      <th>collaborative_score</th>
+      <td>100000.0</td>
+      <td>0.8476</td>
+      <td>0.0337</td>
+      <td>0.6484</td>
+      <td>0.8342</td>
+      <td>0.8508</td>
+      <td>0.8674</td>
+      <td>0.9208</td>
+    </tr>
+    <tr>
+      <th>hybrid_score</th>
+      <td>100000.0</td>
+      <td>0.9064</td>
+      <td>0.0567</td>
+      <td>0.5242</td>
+      <td>0.8924</td>
+      <td>0.9230</td>
+      <td>0.9420</td>
+      <td>0.9755</td>
+    </tr>
+    <tr>
+      <th>recommendation_score</th>
+      <td>100000.0</td>
+      <td>0.9064</td>
+      <td>0.0567</td>
+      <td>0.5242</td>
+      <td>0.8924</td>
+      <td>0.9230</td>
+      <td>0.9420</td>
+      <td>0.9755</td>
+    </tr>
+  </tbody>
+</table>
+      </details>
+      <details>
+        <summary>Preview</summary>
+        <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>user_id</th>
+      <th>soft_cluster</th>
+      <th>cluster_confidence</th>
+      <th>attraction_id</th>
+      <th>name</th>
+      <th>realistic_scene_name</th>
+      <th>attraction_type</th>
+      <th>personal_score</th>
+      <th>cluster_score</th>
+      <th>collaborative_score</th>
+      <th>hybrid_score</th>
+      <th>recommendation_score</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>0.986750</td>
+      <td>197</td>
+      <td>OSM_197_cafe</td>
+      <td>西雅圖極品咖啡</td>
+      <td>cafe</td>
+      <td>0.939499</td>
+      <td>0.928927</td>
+      <td>0.850809</td>
+      <td>0.915390</td>
+      <td>0.915390</td>
+    </tr>
+    <tr>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>0.986750</td>
+      <td>265</td>
+      <td>OSM_265_cafe</td>
+      <td>85度C</td>
+      <td>cafe</td>
+      <td>0.939066</td>
+      <td>0.924053</td>
+      <td>0.854373</td>
+      <td>0.915067</td>
+      <td>0.915067</td>
+    </tr>
+    <tr>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>0.986750</td>
+      <td>167</td>
+      <td>OSM_167_cafe</td>
+      <td>緑逗薏人</td>
+      <td>cafe</td>
+      <td>0.938134</td>
+      <td>0.921297</td>
+      <td>0.854741</td>
+      <td>0.914096</td>
+      <td>0.914096</td>
+    </tr>
+    <tr>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>0.986750</td>
+      <td>163</td>
+      <td>OSM_163_cafe</td>
+      <td>天仁茗茶</td>
+      <td>cafe</td>
+      <td>0.939066</td>
+      <td>0.924053</td>
+      <td>0.848103</td>
+      <td>0.913511</td>
+      <td>0.913511</td>
+    </tr>
+    <tr>
+      <td>1.0</td>
+      <td>2.0</td>
+      <td>0.986750</td>
+      <td>123</td>
+      <td>OSM_123_cafe</td>
+      <td>星巴克</td>
+      <td>cafe</td>
+      <td>0.939066</td>
+      <td>0.924053</td>
+      <td>0.847146</td>
+      <td>0.913274</td>
+      <td>0.913274</td>
+    </tr>
+    <tr>
+      <td>2.0</td>
+      <td>1.0</td>
+      <td>0.850457</td>
+      <td>227</td>
+      <td>OSM_227_museum</td>
+      <td>順益台灣原住民博物館</td>
+      <td>museum</td>
+      <td>0.988562</td>
+      <td>0.969549</td>
+      <td>0.849475</td>
+      <td>0.953389</td>
+      <td>0.953389</td>
+    </tr>
+    <tr>
+      <td>2.0</td>
+      <td>1.0</td>
+      <td>0.850457</td>
+      <td>47</td>
+      <td>OSM_047_museum</td>
+      <td>動物博物館</td>
+      <td>museum</td>
+      <td>0.978574</td>
+      <td>0.980197</td>
+      <td>0.866395</td>
+      <td>0.953298</td>
+      <td>0.953298</td>
+    </tr>
+    <tr>
+      <td>2.0</td>
+      <td>1.0</td>
+      <td>0.850457</td>
+      <td>48</td>
+      <td>OSM_048_museum</td>
+      <td>臺大檔案館</td>
+      <td>museum</td>
+      <td>0.977494</td>
+      <td>0.973832</td>
+      <td>0.864305</td>
+      <td>0.951024</td>
+      <td>0.951024</td>
+    </tr>
+  </tbody>
+</table>
+      </details>
+    </section>
+    
+
+    <section>
+      <h3>10_method_comparison</h3>
+      <table>
+        <tr><th>Rows</th><td>4</td></tr>
+        <tr><th>Columns</th><td>4</td></tr>
+        <tr><th>Duplicated rows</th><td>0</td></tr>
+        <tr><th>Numeric columns</th><td>3</td></tr>
+        <tr><th>Non-numeric columns</th><td>1</td></tr>
+      </table>
+      <details>
+        <summary>Columns</summary>
+        <p class="mono">method, mean_similarity, random_baseline, recommendation_lift</p>
+      </details>
+      <details>
+        <summary>Missing values</summary>
+        <p>No missing values detected.</p>
+      </details>
+      <details>
+        <summary>Numeric summary</summary>
+        <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>count</th>
+      <th>mean</th>
+      <th>std</th>
+      <th>min</th>
+      <th>25%</th>
+      <th>50%</th>
+      <th>75%</th>
+      <th>max</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>mean_similarity</th>
+      <td>4.0</td>
+      <td>0.9236</td>
+      <td>0.0072</td>
+      <td>0.9142</td>
+      <td>0.9200</td>
+      <td>0.9250</td>
+      <td>0.9287</td>
+      <td>0.9302</td>
+    </tr>
+    <tr>
+      <th>random_baseline</th>
+      <td>4.0</td>
+      <td>0.8308</td>
+      <td>0.0000</td>
+      <td>0.8308</td>
+      <td>0.8308</td>
+      <td>0.8308</td>
+      <td>0.8308</td>
+      <td>0.8308</td>
+    </tr>
+    <tr>
+      <th>recommendation_lift</th>
+      <td>4.0</td>
+      <td>0.0928</td>
+      <td>0.0072</td>
+      <td>0.0834</td>
+      <td>0.0891</td>
+      <td>0.0942</td>
+      <td>0.0979</td>
+      <td>0.0994</td>
+    </tr>
+  </tbody>
+</table>
+      </details>
+      <details>
+        <summary>Preview</summary>
+        <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>method</th>
+      <th>mean_similarity</th>
+      <th>random_baseline</th>
+      <th>recommendation_lift</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>personal_only</td>
+      <td>0.930228</td>
+      <td>0.83084</td>
+      <td>0.099389</td>
+    </tr>
+    <tr>
+      <td>cluster_only</td>
+      <td>0.921870</td>
+      <td>0.83084</td>
+      <td>0.091031</td>
+    </tr>
+    <tr>
+      <td>collaborative_only</td>
+      <td>0.914203</td>
+      <td>0.83084</td>
+      <td>0.083363</td>
+    </tr>
+    <tr>
+      <td>hybrid</td>
+      <td>0.928182</td>
+      <td>0.83084</td>
+      <td>0.097342</td>
+    </tr>
+  </tbody>
+</table>
+      </details>
+    </section>
+    
+</div>
+</body>
+</html>
