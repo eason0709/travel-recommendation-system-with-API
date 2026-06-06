@@ -1,0 +1,343 @@
+<!DOCTYPE html>
+<html lang="zh-Hant">
+<head>
+<meta charset="UTF-8">
+<title>期末專題逐字稿｜逐頁對應版</title>
+<style>
+body {
+  margin: 0;
+  background: #f4f4f4;
+  color: #202020;
+  font-family: "Microsoft JhengHei", "Noto Sans TC", Arial, sans-serif;
+  line-height: 1.78;
+}
+.container {
+  max-width: 1020px;
+  margin: 0 auto;
+  padding: 32px 20px 60px;
+}
+.cover, .section {
+  background: #fff;
+  border-radius: 12px;
+  padding: 24px 30px;
+  margin-bottom: 18px;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+}
+h1 {
+  margin: 0 0 12px;
+  font-size: 30px;
+  line-height: 1.35;
+}
+h2 {
+  margin: 2px 0 0;
+  font-size: 22px;
+}
+.meta {
+  color: #555;
+  font-size: 15px;
+  margin-top: 8px;
+}
+.summary {
+  margin-top: 18px;
+  padding: 14px 16px;
+  background: #f0f3f8;
+  border-left: 5px solid #56657a;
+  border-radius: 6px;
+}
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  gap: 16px;
+  border-bottom: 1px solid #e6e6e6;
+  margin-bottom: 14px;
+  padding-bottom: 10px;
+}
+.slide-tag {
+  color: #2462a8;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.2px;
+}
+.time {
+  flex: 0 0 auto;
+  background: #e8edf3;
+  border-radius: 999px;
+  padding: 5px 12px;
+  font-size: 14px;
+  font-weight: 600;
+  white-space: nowrap;
+}
+p {
+  margin: 0 0 12px;
+  font-size: 17px;
+}
+.note {
+  margin-top: 14px;
+  padding: 10px 12px;
+  background: #fff7e8;
+  border-left: 4px solid #b5842b;
+  border-radius: 5px;
+  color: #3f3420;
+  font-size: 15px;
+}
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 16px;
+  font-size: 15px;
+}
+th, td {
+  border: 1px solid #ddd;
+  padding: 8px 10px;
+  text-align: left;
+  vertical-align: top;
+}
+th {
+  background: #f0f0f0;
+}
+.total {
+  font-weight: 700;
+  color: #333;
+}
+@media print {
+  body { background: white; }
+  .container { max-width: none; padding: 0; }
+  .cover, .section {
+    box-shadow: none;
+    border: 1px solid #ddd;
+    page-break-inside: avoid;
+  }
+}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="cover">
+    <h1>期末專題逐字稿｜逐頁對應版</h1>
+    <div class="meta">題目：具可解釋性的 Soft Clustering 旅遊景點推薦與決策支援系統</div>
+    <div class="meta">作者：B11508030 劉智昇、B11508023 許乃中、B11502142 高宇宏</div>
+    <div class="meta total">估計總長：約 11.5～12 分鐘。建議預留約 1 分鐘給上台、接線與 App 切換。</div>
+    <div class="summary">
+      此版改為每張投影片獨立對應，不再使用 Slide 1–2 或 Slide 7–8 這種連續標記。
+      逐字稿本文只保留現場會講出口的內容；操作提醒、備用測試案例與不要逐欄念表格等資訊已移到講解提醒。
+    </div>
+    <table>
+      <thead>
+        <tr>
+          <th>段落</th>
+          <th>對應投影片</th>
+          <th>標題</th>
+          <th>估計時間</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>1</td><td>Slide 1</td><td>封面與主題</td><td>約 0:25</td></tr>
+<tr><td>2</td><td>Slide 2</td><td>問題背景：旅遊推薦不能只給清單</td><td>約 1:05</td></tr>
+<tr><td>3</td><td>Slide 3</td><td>系統概念：輸入、判斷、推薦、解釋</td><td>約 1:00</td></tr>
+<tr><td>4</td><td>Slide 4</td><td>資料來源與系統限制</td><td>約 1:25</td></tr>
+<tr><td>5</td><td>Slide 5</td><td>Cluster 怎麼來：不是憑空分類</td><td>約 1:15</td></tr>
+<tr><td>6</td><td>Slide 6</td><td>推薦方法：Personal、Cluster、Collaborative、Hybrid</td><td>約 1:30</td></tr>
+<tr><td>7</td><td>Slide 7</td><td>Demo 1：輸入條件到 cluster probability</td><td>約 1:15</td></tr>
+<tr><td>8</td><td>Slide 8</td><td>Cluster 測試參數表</td><td>約 0:45</td></tr>
+<tr><td>9</td><td>Slide 9</td><td>Demo 2：推薦景點與推薦理由</td><td>約 1:15</td></tr>
+<tr><td>10</td><td>Slide 10</td><td>Heatmap：如何解釋 cluster</td><td>約 1:20</td></tr>
+<tr><td>11</td><td>Slide 11</td><td>方法比較：差異不大，但都高於 baseline</td><td>約 1:00</td></tr>
+<tr><td>12</td><td>Slide 12</td><td>限制與結論：準確度不是唯一目標</td><td>1:20</td></tr>
+      </tbody>
+    </table>
+  </div>
+  
+<section class="section">
+  <div class="section-header">
+    <div>
+      <div class="slide-tag">Slide 1</div>
+      <h2>1. 封面與主題</h2>
+    </div>
+    <span class="time">約 0:25</span>
+  </div>
+  <p>大家好，我們這組的期末專題是「具可解釋性的 Soft Clustering 旅遊景點推薦與決策支援系統」。</p>
+<p>這個系統的核心想法是：不只推薦景點，也要說明使用者像哪一類旅客、模型有多確定，以及推薦理由是什麼。</p>
+  <div class="note"><strong>講解提醒：</strong>開場保持簡短，不要在封面頁解釋演算法。</div>
+</section>
+
+<section class="section">
+  <div class="section-header">
+    <div>
+      <div class="slide-tag">Slide 2</div>
+      <h2>2. 問題背景：旅遊推薦不能只給清單</h2>
+    </div>
+    <span class="time">約 1:05</span>
+  </div>
+  <p>我們想處理的問題是：旅遊推薦不能只給一個景點清單。</p>
+<p>因為使用者實際規劃旅遊時，通常會同時考慮很多因素，例如預算、可用時間、天氣、體力、同行情境，以及自己偏好自然、文化、美食、拍照或熱門景點。</p>
+<p>傳統搜尋或推薦常根據熱門度、評分或關鍵字排序，但使用者不一定知道為什麼這些結果適合自己。</p>
+<p>所以我們希望補上的資訊是：除了推薦景點之外，也提供偏好族群解釋，以及模型信心與不確定性。</p>
+  <div class="note"><strong>講解提醒：</strong>這頁重點是建立動機：只給排名不夠，推薦結果需要可理解、可檢查。</div>
+</section>
+
+<section class="section">
+  <div class="section-header">
+    <div>
+      <div class="slide-tag">Slide 3</div>
+      <h2>3. 系統概念：輸入、判斷、推薦、解釋</h2>
+    </div>
+    <span class="time">約 1:00</span>
+  </div>
+  <p>整個系統可以分成四個步驟。</p>
+<p>第一步，使用者輸入旅遊條件，例如預算、時間、天氣，以及對不同景點特徵的偏好。</p>
+<p>第二步，模型判斷這個使用者比較像哪些旅遊偏好族群。</p>
+<p>第三步，系統根據這個判斷推薦景點。</p>
+<p>第四步，系統提供可以檢查的證據，例如 confidence、cluster probability 和 heatmap。</p>
+<p>因此使用者最後不是只拿到「去哪裡」，而是同時拿到推薦景點、偏好族群、模型信心和解釋依據。</p>
+  <div class="note"><strong>講解提醒：</strong>配合流程圖講四個輸出：推薦景點、偏好族群、模型信心、解釋證據。</div>
+</section>
+
+<section class="section">
+  <div class="section-header">
+    <div>
+      <div class="slide-tag">Slide 4</div>
+      <h2>4. 資料來源與系統限制</h2>
+    </div>
+    <span class="time">約 1:25</span>
+  </div>
+  <p>資料來源部分，我們在報告中使用 OpenStreetMap，也就是 OSM 的真實 POI，Point of Interest 資料。</p>
+<p>系統透過 Overpass API 抓取地點資料，包含 POI 的 tags、座標、名稱、地址、網站等資訊。</p>
+<p>接著系統會根據 OSM tags 判斷地點類別，例如 museum、park、cafe、historic、shop 或 tourism 相關類型。</p>
+<p>判斷類別之後，再依照類別 profile 轉換成本專案需要的 0 到 5 分特徵，例如 cost、indoor、nature、culture、food、popularity 和 estimated time。</p>
+<p>這裡要注意，OSM 沒有完整評分、即時人氣、票價或訂票狀態，所以 cost、popularity 和 estimated time 仍然是根據類別與 tags 推估。</p>
+  <div class="note"><strong>講解提醒：</strong>這頁只講 OSM。不要再講模擬景點資料；使用者輸入屬於系統操作資料，不在這頁當作資料來源展開。</div>
+</section>
+
+<section class="section">
+  <div class="section-header">
+    <div>
+      <div class="slide-tag">Slide 5</div>
+      <h2>5. Cluster 怎麼來：不是憑空分類</h2>
+    </div>
+    <span class="time">約 1:15</span>
+  </div>
+  <p>接下來說明 cluster 怎麼分類出不同旅遊族群的。</p>
+<p>流程是先有一批使用者偏好資料，模型從裡面找出常見的旅遊偏好族群。</p>
+<p>我們使用的是 GMM，也就是 Gaussian Mixture Model。它的重點不是只輸出一個硬分類，而是輸出使用者屬於各個 cluster 的機率。</p>
+<p>當新使用者輸入條件後，系統會判斷他比較接近哪些已經學出的 cluster，並輸出最可能的 cluster、每群 probability，以及模型 confidence。</p>
+<p>所以 cluster-only 並不是完全沒有資料也能使用。它的價值是在已有初始資料後，輔助新使用者或互動資料不足的使用者。</p>
+  <div class="note"><strong>講解提醒：</strong>可補充：目前 cluster 主要根據景點偏好特徵，不用預算、天氣直接定義族群。</div>
+</section>
+
+<section class="section">
+  <div class="section-header">
+    <div>
+      <div class="slide-tag">Slide 6</div>
+      <h2>6. 推薦方法：Personal、Cluster、Collaborative、Hybrid</h2>
+    </div>
+    <span class="time">約 1:30</span>
+  </div>
+  <p>我們比較了四種推薦方法，可以先用白話理解。</p>
+<p>personal-only 是直接看這個使用者自己的偏好，找出最像這些偏好的景點。它不負責分類。</p>
+<p>cluster-only 是先看使用者比較像哪一群人，再用那群人的平均偏好推薦。它的功能是說明使用者比較像哪一類旅客。</p>
+<p>collaborative-only 則是看同一個 cluster 裡的其他使用者互動紀錄中，哪些景點平均評分較高，再推薦那些景點。</p>
+<p>hybrid 是把個人偏好、cluster 偏好和互動資訊混合。</p>
+<p>因此這四種方法的差異不只是分數高低，而是它們各自使用的資訊不同，也提供不同層次的解釋。</p>
+  <div class="note"><strong>講解提醒：</strong>依照更新後 Slide 6。注意 collaborative-only 說成「互動紀錄」，不要說「模擬互動」。</div>
+</section>
+
+<section class="section">
+  <div class="section-header">
+    <div>
+      <div class="slide-tag">Slide 7</div>
+      <h2>7. Demo 1：輸入條件到 cluster probability</h2>
+    </div>
+    <span class="time">約 1:15</span>
+  </div>
+  <p>接下來進入第一段 Demo。這段的目標是展示：使用者輸入條件後，系統如何判斷他比較像哪一類旅客。</p>
+<p>我們會輸入一組明確情境，例如天氣較差、體力偏低、室內偏好高、文化偏好高。</p>
+<p>輸入後，畫面會顯示最可能的 cluster、cluster confidence，以及每一個 cluster 的 probability。</p>
+<p>這裡的重點不是硬把使用者分成單一類型，而是讓觀眾看到模型同時提供分類結果與不確定性。</p>
+<p>如果 confidence 高，代表模型判斷比較明確；如果 confidence 低，代表使用者可能同時接近多種旅遊類型，不應該只看單一 cluster label。</p>
+  <div class="note"><strong>講解提醒：</strong>Demo 時只操作一組最穩定的情境，避免現場花太多時間調參數。</div>
+</section>
+
+<section class="section">
+  <div class="section-header">
+    <div>
+      <div class="slide-tag">Slide 8</div>
+      <h2>8. Cluster 測試參數表</h2>
+    </div>
+    <span class="time">約 0:45</span>
+  </div>
+  <p>這一頁整理的是不同偏好類型的測試參數。</p>
+<p>我們設計了自然景點、室內文化、美食、拍照打卡、高消費、熱門景點、低消費輕旅行，以及無明顯偏好的案例。</p>
+<p>這些測試案例的目的，是檢查模型面對不同輸入時，是否能產生合理的 cluster 判斷與 confidence。</p>
+<p>例如自然偏好很高的輸入，理論上應該接近自然景點相關 cluster；中性輸入則不應該得到過度明確的判斷。</p>
+  <div class="note"><strong>講解提醒：</strong>這頁不要逐欄念表格。可說明：參數表是備用測試案例，用來證明有準備不同偏好類型檢查 cluster 是否合理。</div>
+</section>
+
+<section class="section">
+  <div class="section-header">
+    <div>
+      <div class="slide-tag">Slide 9</div>
+      <h2>9. Demo 2：推薦景點與推薦理由</h2>
+    </div>
+    <span class="time">約 1:15</span>
+  </div>
+  <p>第二段 Demo 看推薦景點與推薦理由。</p>
+<p>目前 App 展示的是 cluster-based 推薦，也就是根據使用者所屬 cluster 的平均偏好，和景點特徵比較後排序。</p>
+<p>推薦表格裡可以看到景點名稱、景點類型、推薦分數，以及室內、文化、自然、美食、熱門程度和 estimated time 等特徵。</p>
+<p>這裡要強調，推薦表格不是只給排名，而是讓使用者可以檢查推薦是否合理。</p>
+<p>例如如果使用者屬於室內文化相關 cluster，推薦結果中就應該出現室內或文化特徵較高的景點。若結果明顯不合理，就代表資料轉換或 cluster 解釋需要再檢查。</p>
+  <div class="note"><strong>講解提醒：</strong>這段可配合 App 操作或截圖。不要承諾推薦一定完美，重點是結果可檢查。</div>
+</section>
+
+<section class="section">
+  <div class="section-header">
+    <div>
+      <div class="slide-tag">Slide 10</div>
+      <h2>10. Heatmap：如何解釋 cluster</h2>
+    </div>
+    <span class="time">約 1:20</span>
+  </div>
+  <p>接著看 heatmap。heatmap 的作用是解釋每個 cluster 的特徵。</p>
+<p>表格中的數字是標準化後的平均值，也就是 z-score。數字越高，代表這個 cluster 在該特徵越高於整體平均；數字越低，代表越低於整體平均。</p>
+<p>我們用一個簡單規則判讀：z 大於等於 1 可以視為特高，z 小於等於 -1 可以視為特低。接近 0 的值則不要過度解讀。</p>
+<p>例如自然景點 cluster 的 nature value 明顯高，同時 indoor、cost、culture、food 和 popularity 低，就可以解釋成自然景點型。</p>
+<p>如果看到熱門和高消費在同一群，這通常表示在目前資料中，這兩種偏好常一起出現。GMM 只是把資料中的共同模式學出來，不是演算法硬把它們綁在一起。</p>
+  <div class="note"><strong>講解提醒：</strong>只講 1～2 個 cluster 範例即可，不要逐列解釋整張 heatmap。</div>
+</section>
+
+<section class="section">
+  <div class="section-header">
+    <div>
+      <div class="slide-tag">Slide 11</div>
+      <h2>11. 方法比較：差異不大，但都高於 baseline</h2>
+    </div>
+    <span class="time">約 1:00</span>
+  </div>
+  <p>接著看方法比較結果。</p>
+<p>從表格可以看到，四種方法都高於 random baseline，代表系統不是隨機推薦。</p>
+<p>personal-only 的 mean similarity 和 recommendation lift 略高，hybrid 接近 personal-only，cluster-only 和 collaborative-only 稍低。</p>
+<p>但這些差異其實不大，所以我們不會把結果解讀成某個方法大幅勝出。</p>
+<p>比較合理的說法是：personal-only 適合直接個人化排序；cluster-only 和 collaborative-only 雖然分數略低，但能提供族群偏好、相似使用者參考和解釋價值。</p>
+  <div class="note"><strong>講解提醒：</strong>不要說 personal-only 明顯最好，只說略高；重點是四種方法都高於 baseline。</div>
+</section>
+
+<section class="section">
+  <div class="section-header">
+    <div>
+      <div class="slide-tag">Slide 12</div>
+      <h2>12. 限制與結論：準確度不是唯一目標</h2>
+    </div>
+    <span class="time">1:20</span>
+  </div>
+  <p>最後是限制與結論。</p>
+<p>第一，OSM 沒有完整評分、人氣、票價或訂票狀態，所以部分景點特徵仍然是推估值。</p>
+<p>第二，目前 App 主要展示 cluster-based 推薦，而 personal-only、cluster-only、collaborative-only 和 hybrid 的比較是在離線評估中完成，因此 App 展示與離線評估要分開說明。</p>
+<p>第三，未來可以加入交通時間、地理距離、即時天氣與更多互動資料，也可以使用 Precision、NDCG 和 diversity 等推薦系統指標。</p>
+<p>總結來說，本專題的重點不是宣稱分群一定讓推薦更準，而是讓推薦系統從只輸出結果，變成可以說明使用者偏好族群、模型信心和推薦依據的決策支援工具。</p>
+<p>以上是我們的報告，謝謝大家。</p>
+  <div class="note"><strong>講解提醒：</strong>收尾要簡潔，不再新增技術名詞。</div>
+</section>
+
+</div>
+</body>
+</html>

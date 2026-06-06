@@ -124,21 +124,21 @@ hybrid：混合個人偏好、cluster 偏好與互動資訊
 
 ## 專案功能總覽
 
-| 功能 | 目前狀態 | 說明 |
-|---|---|---|
-| 使用者資料生成 | 已實作 | 產生模擬使用者旅遊偏好與情境欄位 |
-| 偏好導向 GMM clustering | 已實作 | 只使用 7 個景點偏好欄位訓練 cluster |
-| Cluster probability | 已實作 | 顯示使用者屬於每個 cluster 的機率 |
-| Cluster confidence | 已實作 | 使用最高 cluster probability 作為模型信心 |
-| Low confidence warning | 已實作 | 信心低時提醒不要過度解讀單一 cluster |
-| Dynamic cluster label | 已實作 | 根據 cluster feature mean 自動命名 |
-| Cluster heatmap | 已實作 | 顯示各 cluster 在各偏好特徵上的高低 |
-| 模擬景點資料 | 已實作 | 由 `generate_attractions.py` 產生 |
-| OpenStreetMap POI 匯入 | 選配 | 可用 OSM 真實 POI 補充景點名稱與 metadata |
-| Cluster-based App 推薦 | 已實作 | App 目前展示此模式 |
-| Personal / Cluster / Collaborative / Hybrid 離線比較 | 已實作 | 由 `recommendation_engine.py` 與 `evaluate_clusters.py` 完成 |
-| App 內切換推薦模式 | 目前未保留 | 舊版 README 相關描述已移除 |
-| 固定 Cluster 0~7 名稱表 | 已移除 | 改用動態 label summary |
+| 功能                                                 | 目前狀態   | 說明                                                         |
+| ---------------------------------------------------- | ---------- | ------------------------------------------------------------ |
+| 使用者資料生成                                       | 已實作     | 產生模擬使用者旅遊偏好與情境欄位                             |
+| 偏好導向 GMM clustering                              | 已實作     | 只使用 7 個景點偏好欄位訓練 cluster                          |
+| Cluster probability                                  | 已實作     | 顯示使用者屬於每個 cluster 的機率                            |
+| Cluster confidence                                   | 已實作     | 使用最高 cluster probability 作為模型信心                    |
+| Low confidence warning                               | 已實作     | 信心低時提醒不要過度解讀單一 cluster                         |
+| Dynamic cluster label                                | 已實作     | 根據 cluster feature mean 自動命名                           |
+| Cluster heatmap                                      | 已實作     | 顯示各 cluster 在各偏好特徵上的高低                          |
+| 模擬景點資料                                         | 已實作     | 由 `generate_attractions.py` 產生                            |
+| OpenStreetMap POI 匯入                               | 選配       | 可用 OSM 真實 POI 補充景點名稱與 metadata                    |
+| Cluster-based App 推薦                               | 已實作     | App 目前展示此模式                                           |
+| Personal / Cluster / Collaborative / Hybrid 離線比較 | 已實作     | 由 `recommendation_engine.py` 與 `evaluate_clusters.py` 完成 |
+| App 內切換推薦模式                                   | 目前未保留 | 舊版 README 相關描述已移除                                   |
+| 固定 Cluster 0~7 名稱表                              | 已移除     | 改用動態 label summary                                       |
 
 ---
 
@@ -160,28 +160,28 @@ travel_clustering_project/
 ├── requirements.txt
 ├── README.md
 ├── .gitignore
-├── data/       # 執行後產生，建議不要上傳 GitHub
-├── figures/    # 執行後產生，建議不要上傳 GitHub
-└── models/     # 執行後產生，建議不要上傳 GitHub
+├── data/       # 執行後產生
+├── figures/    # 執行後產生
+└── models/     # 執行後產生
 ```
 
 ---
 
 ## 檔案說明
 
-| 檔案 | 功能 |
-|---|---|
-| `travel_utils.py` | 共用工具檔，集中管理特徵欄位、cluster label、confidence 判讀與顯示名稱 |
-| `generate_data.py` | 產生模擬使用者旅遊偏好資料；新版資料生成會讓自然、美食、拍照、文化、室內、熱門等偏好更明確 |
+| 檔案                             | 功能                                                                                                           |
+| -------------------------------- | -------------------------------------------------------------------------------------------------------------- |
+| `travel_utils.py`                | 共用工具檔，集中管理特徵欄位、cluster label、confidence 判讀與顯示名稱                                         |
+| `generate_data.py`               | 產生模擬使用者旅遊偏好資料；新版資料生成會讓自然、美食、拍照、文化、室內、熱門等偏好更明確                     |
 | `cluster_interpretation_soft.py` | 使用 GMM 進行 preference-based soft clustering，輸出 cluster probability、confidence、label summary 與 heatmap |
-| `generate_attractions.py` | 產生模擬景點資料 |
-| `fetch_real_attractions_osm.py` | 從 OpenStreetMap Overpass API 抓取真實 POI，並轉換成本專案使用的景點資料格式 |
-| `generate_user_interactions.py` | 根據使用者偏好與景點特徵產生模擬 rating / clicked 互動資料 |
-| `recommendation_engine.py` | 產生推薦候選清單與 Top-K 推薦結果，包含 personal、cluster、collaborative、hybrid 分數 |
-| `evaluate_clusters.py` | 比較不同推薦方法與 random baseline 的差異 |
-| `analyze_data.py` | 選配，用於資料分布與相關係數分析 |
-| `test_cluster_inputs.py` | 用多組固定輸入測試 cluster 分類是否合理 |
-| `app.py` | Streamlit 網頁展示系統 |
+| `generate_attractions.py`        | 產生模擬景點資料                                                                                               |
+| `fetch_real_attractions_osm.py`  | 從 OpenStreetMap Overpass API 抓取真實 POI，並轉換成本專案使用的景點資料格式                                   |
+| `generate_user_interactions.py`  | 根據使用者偏好與景點特徵產生模擬 rating / clicked 互動資料                                                     |
+| `recommendation_engine.py`       | 產生推薦候選清單與 Top-K 推薦結果，包含 personal、cluster、collaborative、hybrid 分數                          |
+| `evaluate_clusters.py`           | 比較不同推薦方法與 random baseline 的差異                                                                      |
+| `analyze_data.py`                | 選配，用於資料分布與相關係數分析                                                                               |
+| `test_cluster_inputs.py`         | 用多組固定輸入測試 cluster 分類是否合理                                                                        |
+| `app.py`                         | Streamlit 網頁展示系統                                                                                         |
 
 ---
 
@@ -226,13 +226,13 @@ requests
 
 其中：
 
-| 套件 | 用途 |
-|---|---|
-| `scikit-learn` | GMM、standardization、imputation |
-| `streamlit` | App 展示 |
-| `joblib` | 儲存與載入模型 |
-| `pyarrow` | 避免部分 pandas / parquet 讀取問題 |
-| `requests` | OpenStreetMap / Overpass API 資料抓取 |
+| 套件           | 用途                                  |
+| -------------- | ------------------------------------- |
+| `scikit-learn` | GMM、standardization、imputation      |
+| `streamlit`    | App 展示                              |
+| `joblib`       | 儲存與載入模型                        |
+| `pyarrow`      | 避免部分 pandas / parquet 讀取問題    |
+| `requests`     | OpenStreetMap / Overpass API 資料抓取 |
 
 ---
 
@@ -359,11 +359,11 @@ figures/soft_cluster_confidence_distribution.png
 
 重要欄位：
 
-| 欄位 | 說明 |
-|---|---|
-| `soft_cluster` | 使用者最可能所屬的 cluster |
+| 欄位                      | 說明                                     |
+| ------------------------- | ---------------------------------------- |
+| `soft_cluster`            | 使用者最可能所屬的 cluster               |
 | `soft_cluster_confidence` | 最高 cluster probability，也就是模型信心 |
-| `cluster_prob_i` | 使用者屬於第 i 個 cluster 的機率 |
+| `cluster_prob_i`          | 使用者屬於第 i 個 cluster 的機率         |
 
 ---
 
@@ -373,15 +373,13 @@ figures/soft_cluster_confidence_distribution.png
 
 建議用以下 threshold 判讀：
 
-| 標記 | 條件 | 意思 |
-|---|---:|---|
-| 特高 | `z >= +1.0` | 該 cluster 在此特徵明顯高於平均 |
-| 偏高 | `+0.5 <= z < +1.0` | 稍微高於平均 |
-| 普通 | `-0.5 < z < +0.5` | 接近平均，不要過度解讀 |
-| 偏低 | `-1.0 < z <= -0.5` | 稍微低於平均 |
-| 特低 | `z <= -1.0` | 該 cluster 在此特徵明顯低於平均 |
-
-簡報或報告時建議只標記「特高」與「特低」，避免圖表過度複雜。
+| 標記 |               條件 | 意思                            |
+| ---- | -----------------: | ------------------------------- |
+| 特高 |        `z >= +1.0` | 該 cluster 在此特徵明顯高於平均 |
+| 偏高 | `+0.5 <= z < +1.0` | 稍微高於平均                    |
+| 普通 |  `-0.5 < z < +0.5` | 接近平均，不要過度解讀          |
+| 偏低 | `-1.0 < z <= -0.5` | 稍微低於平均                    |
+| 特低 |        `z <= -1.0` | 該 cluster 在此特徵明顯低於平均 |
 
 範例：
 
@@ -556,12 +554,12 @@ data/recommendations.csv
 
 分數包含：
 
-| 分數 | 說明 |
-|---|---|
-| `personal_score` | 使用者個人偏好向量與景點向量的相似度 |
-| `cluster_score` | 使用者所屬 cluster 平均偏好向量與景點向量的相似度 |
-| `collaborative_score` | 同 cluster 使用者對景點的平均模擬 rating |
-| `hybrid_score` | personal、cluster、collaborative 的混合分數 |
+| 分數                  | 說明                                              |
+| --------------------- | ------------------------------------------------- |
+| `personal_score`      | 使用者個人偏好向量與景點向量的相似度              |
+| `cluster_score`       | 使用者所屬 cluster 平均偏好向量與景點向量的相似度 |
+| `collaborative_score` | 同 cluster 使用者對景點的平均模擬 rating          |
+| `hybrid_score`        | personal、cluster、collaborative 的混合分數       |
 
 ---
 
@@ -580,12 +578,12 @@ figures/recommendation_method_comparison.png
 
 比較方法：
 
-| 方法 | 說明 |
-|---|---|
-| `personal_only` | 直接根據使用者個人偏好推薦 |
-| `cluster_only` | 根據使用者所屬 cluster 的平均偏好推薦 |
-| `collaborative_only` | 根據同 cluster 使用者的模擬互動紀錄推薦 |
-| `hybrid` | 混合 personal、cluster、collaborative 分數 |
+| 方法                 | 說明                                       |
+| -------------------- | ------------------------------------------ |
+| `personal_only`      | 直接根據使用者個人偏好推薦                 |
+| `cluster_only`       | 根據使用者所屬 cluster 的平均偏好推薦      |
+| `collaborative_only` | 根據同 cluster 使用者的模擬互動紀錄推薦    |
+| `hybrid`             | 混合 personal、cluster、collaborative 分數 |
 
 ### 方法比較的正確解讀
 
@@ -598,8 +596,7 @@ hybrid 接近 personal_only
 cluster_only 與 collaborative_only 略低，但仍有參考價值
 ```
 
-因此不要把結果說成「personal-only 大幅勝出」。  
-較合理的解讀是：
+因此較合理的解讀是：
 
 ```text
 personal_only 適合直接個人化排序；
@@ -618,21 +615,21 @@ streamlit run app.py
 
 App 功能包含：
 
-| 功能 | 說明 |
-|---|---|
-| 手動輸入使用者條件 | 使用 sidebar 輸入預算、時間、天氣、疲勞與景點偏好 |
-| 使用既有使用者 | 從已產生資料中選擇 user ID |
-| Soft Cluster | 顯示模型判定的 cluster |
-| Cluster 類型 | 顯示根據 cluster feature mean 動態產生的 label |
-| Cluster Confidence | 顯示最高 cluster probability |
-| Soft Cluster Probability | 顯示使用者屬於各 cluster 的機率 |
-| Low Confidence Warning | 當模型信心較低時顯示提醒 |
-| Cluster 計算流程說明 | 解釋 imputer、scaler、GMM probability 與 confidence 的計算流程 |
-| 使用者輸入 / 行為特徵 | 顯示目前使用者輸入與偏好特徵 |
-| Cluster-based 推薦景點 | 根據使用者所屬 cluster 的平均偏好推薦景點 |
-| 推薦結果解釋 | 說明推薦分數與 cluster 平均偏好的關係 |
-| Cluster 解釋 | 顯示該 cluster 高於或低於平均的特徵 |
-| 分析圖表 | 顯示 heatmap、confidence distribution、method comparison 等 |
+| 功能                     | 說明                                                           |
+| ------------------------ | -------------------------------------------------------------- |
+| 手動輸入使用者條件       | 使用 sidebar 輸入預算、時間、天氣、疲勞與景點偏好              |
+| 使用既有使用者           | 從已產生資料中選擇 user ID                                     |
+| Soft Cluster             | 顯示模型判定的 cluster                                         |
+| Cluster 類型             | 顯示根據 cluster feature mean 動態產生的 label                 |
+| Cluster Confidence       | 顯示最高 cluster probability                                   |
+| Soft Cluster Probability | 顯示使用者屬於各 cluster 的機率                                |
+| Low Confidence Warning   | 當模型信心較低時顯示提醒                                       |
+| Cluster 計算流程說明     | 解釋 imputer、scaler、GMM probability 與 confidence 的計算流程 |
+| 使用者輸入 / 行為特徵    | 顯示目前使用者輸入與偏好特徵                                   |
+| Cluster-based 推薦景點   | 根據使用者所屬 cluster 的平均偏好推薦景點                      |
+| 推薦結果解釋             | 說明推薦分數與 cluster 平均偏好的關係                          |
+| Cluster 解釋             | 顯示該 cluster 高於或低於平均的特徵                            |
+| 分析圖表                 | 顯示 heatmap、confidence distribution、method comparison 等    |
 
 目前 App 主要展示的是 cluster-based recommendation。  
 若要展示 personal-only 或 hybrid 的排序結果，請使用 `recommendation_engine.py` 與 `evaluate_clusters.py` 的離線輸出，或自行擴充 App UI。
@@ -738,46 +735,19 @@ python test_cluster_inputs.py --preset --method mean --show-prob
 
 建議測試的典型輸入包含：
 
-| 測試類型 | 主要特徵 |
-|---|---|
+| 測試類型       | 主要特徵                              |
+| -------------- | ------------------------------------- |
 | 自然景點導向型 | nature 高，indoor / food / culture 低 |
-| 室內文化型 | indoor 高，culture 高，nature 低 |
-| 美食導向型 | food 高 |
-| 拍照打卡型 | photo 高，popularity 高 |
-| 高消費型 | cost 高 |
-| 熱門景點型 | popularity 高 |
-| 低消費輕旅行型 | cost 低，偏好不明顯 |
-| 中性模糊型 | 各項接近中間值，confidence 應較低 |
+| 室內文化型     | indoor 高，culture 高，nature 低      |
+| 美食導向型     | food 高                               |
+| 拍照打卡型     | photo 高，popularity 高               |
+| 高消費型       | cost 高                               |
+| 熱門景點型     | popularity 高                         |
+| 低消費輕旅行型 | cost 低，偏好不明顯                   |
+| 中性模糊型     | 各項接近中間值，confidence 應較低     |
 
 注意：GMM 的 cluster 編號每次重訓可能不同。  
 測試重點不是「是否剛好分到 cluster 0 或 cluster 1」，而是「label 與 probability 是否符合輸入偏好」。
-
----
-
-## GitHub 注意事項
-
-`data/`、`figures/`、`models/` 屬於執行後產生的資料、圖片與模型檔。若不想把大量產物或模型檔放到 GitHub，建議在 `.gitignore` 中排除：
-
-```gitignore
-data/
-figures/
-models/
-__pycache__/
-*.pyc
-venv/
-.venv/
-.env
-.DS_Store
-Thumbs.db
-```
-
-如果這些資料夾已經被 Git 追蹤，需要使用以下指令從 Git 追蹤中移除，但保留本機檔案：
-
-```bash
-git rm -r --cached data figures models
-```
-
-之後再 commit 並 push。
 
 ---
 
@@ -785,14 +755,14 @@ git rm -r --cached data figures models
 
 本 README 已根據最新修改調整，移除或修正了下列舊版內容：
 
-| 舊版內容 | 最新處理 |
-|---|---|
-| App 可選 `personal_only` / `cluster_only` | 已移除；目前 App 主要展示 cluster-based 推薦 |
-| 固定列出 `Cluster 0 ~ 7` 名稱 | 已移除；改用 `soft_cluster_label_summary.csv` 動態產生 |
-| cluster 使用預算、天氣、疲勞等欄位 | 已修正；新版 cluster 只使用 7 個景點偏好欄位 |
-| 將 OSM 資料描述成完整真實旅遊平台資料 | 已修正；OSM 僅提供真實 POI 與 metadata，評分與人氣等仍為推估 |
-| `personal_only` 明顯最好 | 已修正；目前結果通常只是略高，四種方法差異不大 |
-| collaborative-only 像真實使用者評分 | 已修正；目前互動資料為模擬產生 |
+| 舊版內容                                  | 最新處理                                                     |
+| ----------------------------------------- | ------------------------------------------------------------ |
+| App 可選 `personal_only` / `cluster_only` | 已移除；目前 App 主要展示 cluster-based 推薦                 |
+| 固定列出 `Cluster 0 ~ 7` 名稱             | 已移除；改用 `soft_cluster_label_summary.csv` 動態產生       |
+| cluster 使用預算、天氣、疲勞等欄位        | 已修正；新版 cluster 只使用 7 個景點偏好欄位                 |
+| 將 OSM 資料描述成完整真實旅遊平台資料     | 已修正；OSM 僅提供真實 POI 與 metadata，評分與人氣等仍為推估 |
+| `personal_only` 明顯最好                  | 已修正；目前結果通常只是略高，四種方法差異不大               |
+| collaborative-only 像真實使用者評分       | 已修正；目前互動資料為模擬產生                               |
 
 ---
 
