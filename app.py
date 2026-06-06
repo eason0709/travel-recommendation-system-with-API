@@ -18,7 +18,7 @@ st.set_page_config(
 )
 
 st.title("旅遊地點推薦系統")
-st.caption("Unsupervised Clustering + Cluster-based Recommendation Demo")
+st.caption("Preference-based Clustering + Cluster-based Recommendation Demo")
 
 
 # =========================
@@ -743,14 +743,14 @@ st.markdown("### Cluster 計算流程說明")
 with st.expander("查看模型如何計算 Soft Cluster", expanded=False):
 
     st.write(
-        "本系統的 cluster 不是人工規則直接分類，而是由 Gaussian Mixture Model 根據使用者行為特徵計算機率後決定。"
+        "本系統的 cluster 不是人工規則直接分類，而是由 Gaussian Mixture Model 根據使用者的景點偏好特徵計算機率後決定。預算、天氣、疲勞與時間不再用來定義 cluster，避免情境欄位蓋過真正的景點偏好。"
     )
 
     st.markdown(
         """
 計算流程如下：
 
-1. 讀取使用者輸入特徵，例如 budget、available_time、weather_badness、fatigue、selected_indoor_score 等。
+1. 讀取使用者輸入特徵，例如室內偏好、消費等級偏好、拍照價值偏好、自然景觀偏好、文化價值偏好、美食價值偏好與熱門程度偏好。
 2. 使用訓練時儲存的 imputer 補齊缺失值。
 3. 使用訓練時儲存的 StandardScaler 將不同尺度的欄位轉成標準化數值。
 4. 將標準化後的特徵輸入 GMM。

@@ -34,13 +34,10 @@ ATTRACTION_FEATURES = [
     "popularity",
 ]
 
+# Root fix: clusters should describe travel preference type, not context.
+# Budget/weather/fatigue/time are still useful for recommendation penalties or UI,
+# but they should not decide whether a user is nature/food/photo/culture type.
 MODEL_FEATURES = [
-    "budget",
-    "available_time",
-    "weather_badness",
-    "social_context",
-    "fatigue",
-    "spontaneity",
     *BEHAVIOR_FEATURES,
 ]
 
